@@ -5,7 +5,7 @@ import Link from '../navLinks'
 
 const Navbar = styled.header`
   width: 100%;
-  background-color: blue;
+  background-color: #8B008B;
   display: flex;
   flex-direction: row-reverse
 `

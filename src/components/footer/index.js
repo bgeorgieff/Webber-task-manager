@@ -9,8 +9,10 @@ const Container = styled.footer`
   color: #234465;
   border-top: 2px solid #234465;
   border-bottom: 2px solid #234465;
-  margin-bottom: 1%;
+  margin-top: auto;
   display: flex;
+  position: absolute;
+  bottom: 0
 `
 
 const user = '' //TODO Add auth here
