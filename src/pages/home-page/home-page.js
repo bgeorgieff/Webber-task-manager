@@ -4,22 +4,19 @@ import PageWrapper from '../../components/page-wrapper'
 
 const Container = styled.div`
   background-image: url('https://images.pexels.com/photos/3243/pen-calendar-to-do-checklist.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
-
-  height: 100vh;
-
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
+  height:90vh;
   font-size: 32px;
-  position: relative;
+  display: block;
 `
 
 const TextContainer = styled.div`
   font-size: inherit;
   text-transform: capitalize;
   position: absolute;
-  transform: translate(80px, 180%);
+  transform: translate(80px, 150%);
 `
 
 const HeaderText3 = styled.h3`
