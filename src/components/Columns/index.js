@@ -29,7 +29,7 @@ const Column = (props) => {
   return (
     <Draggable draggableId={props.column.id} index={props.index}>
       {provided => 
-        <Container {...provided.draggableProps} ref={provided.  innerRef}>
+        <Container {...provided.draggableProps} ref={provided.innerRef}>
           <Title {...provided.dragHandleProps}>
             {props.column.title}
           </Title>
