@@ -4,7 +4,7 @@ const config = {
     development: {
         port: process.env.PORT || 9999,
         dbURL: process.env.DB_URL,
-        authCookieName: 'x-auth-token'
+        authCookieName: 'x-auth-token',
     },
     production: {}
 };
