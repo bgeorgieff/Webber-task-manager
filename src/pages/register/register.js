@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { useHistory } from 'react-router'
 import PageWrapper from '../../components/page-wrapper'
 import Title from '../../components/title'
 import Input from '../../components/input'
 import Submit from '../../components/submit'
 import styled from 'styled-components'
+import UserContext from '../../Context'
+import authenticate from '../../utils/auth'
 
 const Form = styled.form`
   text-align: center;
@@ -14,9 +17,24 @@ const Register = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [rePassword, setRepassword] = useState('')
+  const history = useHistory()
 
-  const handleSubmit = () => {
-    //TODO
+  const context = useContext(UserContext)
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    
+    await authenticate('http://localhost:9999/api/user/register', {
+      username,
+      password,
+      rePassword
+    }, (user) => {
+      context.logIn(user)
+      history.push('/')
+    }, (e) => {
+      console.log('Register error', e);
+    })
   }
 
   return (
