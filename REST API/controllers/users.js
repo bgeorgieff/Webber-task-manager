@@ -7,13 +7,13 @@ const newUser = async (req, res, next) => {
   const {
     username,
     password,
-    repeatPassword
+    rePassword
   } = req.body
+  console.log(req.body);
 
-  const passwordMatch = passwordsValidation(password, repeatPassword)
-
-  const salt = bcrypt.genSaltSync(10)
-  const hash = bcrypt.hashSync(password, salt)
+  const passwordMatch = passwordsValidation(password, rePassword)
+  const saltRounds = bcrypt.genSaltSync(10)
+  const hash = bcrypt.hashSync(password, saltRounds)
   
   const user = new User({username, password: hash})
   await user.save()
@@ -23,9 +23,9 @@ const newUser = async (req, res, next) => {
   res.cookie('x-auth-token', token).send(user)
 
   try {
-    const user = new Admin({username, password, createdAt: Date.now()})
+    const user = new User({username, password, createdAt: Date.now()})
   } catch (err) {
-    res.status(500).send(error.message)
+    res.status(500).send(err.message)
   }
 }
 
@@ -35,7 +35,21 @@ const logIn = async (req, res, next) => {
     password
   } = req.body
 
+  if(username === null) {
+    res.status(401).send('Something went wrong!')
+  }
 
+  const user = await User.findOne({ username })
+
+  const status = bcrypt.compare(password, user.password)
+
+  if(status) {
+    const token = jwt.sign(user.id, process.env.JWT_SECRET)
+
+    res.cookie('x-auth-token', token).send(user)
+  } else {
+    res.status(401).send('Something went wrong!')
+  }
 }
 
 
