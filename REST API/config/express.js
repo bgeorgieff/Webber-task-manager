@@ -1,6 +1,6 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
-const secret = 'secret'
+const secret = process.env.SECRET
 
 module.exports = (app) => {
     app.use(express.json())
@@ -8,6 +8,6 @@ module.exports = (app) => {
     app.use(express.urlencoded({
         extended: true
     }));
-
+    
     app.use(cookieParser(secret))
 }

@@ -1,10 +1,10 @@
-const router = require('../routes/');
+const router = require('../routes/')
 
 module.exports = (app) => {
 
-    app.use('/api/user', router.user);
+    app.use('/api/user', router.users)
 
-    app.use('/api/origami', router.origami);
+    // app.use('/api/origami', router.origami);
 
-    app.use('*', (req, res, next) => res.send('<h1> Something went wrong. Try again. :thumbsup: </h1>'))
+    app.use('*', (req, res, next) => res.send('<h1> Something went wrong. Try again. </h1>'))
 };
