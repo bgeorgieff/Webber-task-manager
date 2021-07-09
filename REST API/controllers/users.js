@@ -52,7 +52,6 @@ const logIn = async (req, res, next) => {
   }
 }
 
-
 module.exports = {
   newUser,
   logIn
