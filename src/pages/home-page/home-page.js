@@ -30,6 +30,11 @@ const Paragraph = styled.div`
   padding: 24px;
 `
 
+const ButtonDiv = styled.div`
+  padding: 12px;
+  text-align:center;
+`
+
 const Button = styled.a`
   text-decoration: none; 
   background-color: black;
@@ -39,13 +44,15 @@ const Button = styled.a`
   padding: 8px 38px 8px 38px;
   width: 60%;
   margin: 0 auto;
-`
+  -webkit-transition: background-color 0.2s ease-out;
+  -moz-transition: background-color 0.2s ease-out;
+  -o-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 
-const ButtonDiv = styled.div`
-  padding: 12px;
-  text-align:center
+  &:hover {
+    background-color: #8B008B;
+  }
 `
-
 const HomePage = () => {
   return (
     <PageWrapper>

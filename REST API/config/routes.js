@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     app.use('/api/user', router.users)
 
-    // app.use('/api/origami', router.origami);
+    app.use('/api/board', router.board);
 
     app.use('*', (req, res, next) => res.send('<h1> Something went wrong. Try again. </h1>'))
 };

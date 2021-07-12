@@ -5,6 +5,10 @@ const getNavigation = (user, boardId) => {
       link: '/log-out'
     },
     {
+      title: 'About',
+      link: '/about'
+    },
+    {
       title: 'Create Board',
       link: '/create-board'
     },
@@ -16,10 +20,6 @@ const getNavigation = (user, boardId) => {
       title: 'Create Task',
       link: '/create-task'
     }, 
-    {
-      title: 'About',
-      link: '/about'
-    },
     {
       title: 'Home',
       link: '/'
@@ -45,7 +45,7 @@ const getNavigation = (user, boardId) => {
     },
   ]
 
-  const loggedIn = user && user.loggedIn
+  const loggedIn = user.user && user.user.loggedIn
 
   return loggedIn ? authLinks : guestLinks
 }
