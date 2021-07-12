@@ -9,6 +9,8 @@ import HomePage from './pages/home-page/home-page'
 import Register from './pages/register/register'
 import Login from './pages/login'
 import NewBoard from './components/new-board'
+import Workplaces from './pages/workplaces/workplaces'
+import CurrentWorkPlace from './pages/board/board'
 
 const Navigation = () => {
   return (
@@ -18,6 +20,8 @@ const Navigation = () => {
         <Route path='/register' component={Register} />
         <Route path='/log-in' component={Login} />
         <Route path='/create-board' component={NewBoard} />
+        <Route path='/workplace' component={Workplaces} />
+        <Route path='/current-workplace/:id' component={CurrentWorkPlace} />
       </Switch>
     </BrowserRouter>
   )

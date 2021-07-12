@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import UserContext from '../../Context'
+import UserContext from '../../Contexts/Context'
 import getNavigation from '../../utils/navigation'
 import Link from '../navLinks'
 

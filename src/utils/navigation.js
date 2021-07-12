@@ -1,29 +1,21 @@
 const getNavigation = (user, boardId) => {
   const authLinks = [
     {
-      title: 'Log Out',
-      link: '/log-out'
-    },
-    {
       title: 'About',
       link: '/about'
+    },
+    {
+      title: 'Log Out',
+      link: '/log-out'
     },
     {
       title: 'Create Board',
       link: '/create-board'
     },
     {
-      title: 'Visit Board',
-      link: `/visit-board/${boardId}`
+      title: 'Workplaces',
+      link: `/workplace`
     }, 
-    {
-      title: 'Create Task',
-      link: '/create-task'
-    }, 
-    {
-      title: 'Home',
-      link: '/'
-    },
   ]
 
   const guestLinks = [

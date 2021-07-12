@@ -5,7 +5,7 @@ import Title from '../../components/title'
 import Input from '../../components/input'
 import Submit from '../../components/submit'
 import styled from 'styled-components'
-import UserContext from '../../Context'
+import UserContext from '../../Contexts/Context'
 
 
 const Form = styled.form`
@@ -48,7 +48,7 @@ const NewBoard = () => {
       
       const data = await promise
   
-      history.push('/')
+      history.push('/workplace')
     } else {
       setError(true)
     }
@@ -64,7 +64,6 @@ const NewBoard = () => {
           onChange={(e) => {setBoardName(e.target.value)}}
           label="Board Name"
           id="boardName" />
-
         <Submit title="Create" />
       </Form>
     </PageWrapper>

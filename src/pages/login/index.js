@@ -5,7 +5,7 @@ import Title from '../../components/title'
 import Input from '../../components/input'
 import Submit from '../../components/submit'
 import styled from 'styled-components'
-import UserContext from '../../Context'
+import UserContext from '../../Contexts/Context'
 import authenticate from '../../utils/auth'
 
 const Form = styled.form`
