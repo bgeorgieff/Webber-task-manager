@@ -54,6 +54,7 @@ const Button = styled.a`
   }
 `
 const HomePage = () => {
+
   return (
     <PageWrapper>
       <Container>

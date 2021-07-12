@@ -9,6 +9,13 @@ const createBoard = async (req, res, next) => {
   return res.send(board)
 }
 
+const getAllBoards = async (req, res, next) => {
+  const allBoards = await Board.find()
+
+  res.send(allBoards)
+}
+
 module.exports = {
-  createBoard
+  createBoard, 
+  getAllBoards
 }
