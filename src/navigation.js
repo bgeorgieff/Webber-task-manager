@@ -8,6 +8,7 @@ import {
 import HomePage from './pages/home-page/home-page'
 import Register from './pages/register/register'
 import Login from './pages/login'
+import NewBoard from './components/new-board'
 
 const Navigation = () => {
   return (
@@ -16,6 +17,7 @@ const Navigation = () => {
         <Route exact path='/' component={HomePage} />
         <Route path='/register' component={Register} />
         <Route path='/log-in' component={Login} />
+        <Route path='/create-board' component={NewBoard} />
       </Switch>
     </BrowserRouter>
   )

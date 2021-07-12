@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import UserContext from '../../Context'
 import getNavigation from '../../utils/navigation'
 import Link from '../navLinks'
 
@@ -15,10 +16,11 @@ const Container = styled.footer`
   bottom: 0
 `
 
-const user = '' //TODO Add auth here
-const links = getNavigation(user)
-
 const Footer = () => {
+  const user = useContext(UserContext)
+
+  const links = getNavigation(user)
+
   return (
     <Container>
         {

@@ -3,27 +3,26 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { passwordsValidation } = require('../utils/validations')
 
-const newUser = async (req, res, next) => {
+const register = async (req, res, next) => {
   const {
     username,
     password,
     rePassword
   } = req.body
-  console.log(req.body);
-
-  const passwordMatch = passwordsValidation(password, rePassword)
-  const saltRounds = bcrypt.genSaltSync(10)
-  const hash = bcrypt.hashSync(password, saltRounds)
-  
-  const user = new User({username, password: hash})
-  await user.save()
-
-  const token = jwt.sign(user._id.toString(), process.env.JWT_SECRET)
-
-  res.cookie('x-auth-token', token).send(user)
 
   try {
-    const user = new User({username, password, createdAt: Date.now()})
+    const passwordMatch = passwordsValidation(password, rePassword)
+
+    const saltRounds = bcrypt.genSaltSync(10)
+    const hash = bcrypt.hashSync(password, saltRounds)
+    
+    const user = new User({username, password: hash})
+    await user.save()
+
+    const token = jwt.sign(user._id.toString(), process.env.JWT_SECRET)
+
+    return res.cookie('x-auth-token', token).send(user)
+
   } catch (err) {
     res.status(500).send(err.message)
   }
@@ -52,7 +51,24 @@ const logIn = async (req, res, next) => {
   }
 }
 
+const verifyUser = async (req, res, next) => {
+  if(!req.cookies['x-auth-token']) {
+    res.status(401).send('Missing cookie!')
+  }
+
+  try {
+    const userId = jwt.verify(req.cookies['x-auth-token'], process.env.JWT_SECRET)
+
+    const user = await User.findById(userId)
+    
+    return res.send(user)
+  } catch (err) {
+    res.status(500).clearCookie('x-auth-token').send(err.message)
+  }
+}
+
 module.exports = {
-  newUser,
-  logIn
+  register,
+  logIn,
+  verifyUser
 }

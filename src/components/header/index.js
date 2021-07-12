@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import UserContext from '../../Context'
 import getNavigation from '../../utils/navigation'
 import Link from '../navLinks'
 
@@ -11,8 +12,8 @@ const Navbar = styled.header`
 `
 
 const Header = () => {
-
-  const user = '' //TODO - ADD USER STATE HERE
+  const user = useContext(UserContext)
+  
   const links = getNavigation(user)
 
   return (
