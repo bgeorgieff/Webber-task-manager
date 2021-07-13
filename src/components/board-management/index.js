@@ -21,19 +21,21 @@ const Form = styled.form`
   display: inline-block;
 `
 
-const BoardCreation = () => {
+const BoardCreation = (props) => {
 
   const [columnName, setColumnName] = useState('')
   const [taskName, setTaskName] = useState('')
   const [taskText, setTaskText] = useState('')
   const context = useContext(UserContext)
+  const boardId = props.match.params.id
 
   const handleColumnSubmit = async (event) => {
     event.preventDefault()
     
     await createColumn('http://localhost:9999/api/create/column', {
       columnName,
-      user: context.user._id
+      user: context.user._id,
+      boardId
     })
 
     setColumnName('')
@@ -45,7 +47,8 @@ const BoardCreation = () => {
     await createTask('http://localhost:9999/api/create-new/task', {
       taskName, 
       taskText,
-      user: context.user._id
+      user: context.user._id,
+      boardId
     })
 
     setTaskName('')

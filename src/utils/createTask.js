@@ -1,6 +1,5 @@
 const createTask = async (url, body) => {
-  console.log(url);
-  console.log(body);
+
   try{
     const promise = await fetch(url, {
       method: 'POST', 

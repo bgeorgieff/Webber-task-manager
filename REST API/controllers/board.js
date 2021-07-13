@@ -15,7 +15,16 @@ const getAllBoards = async (req, res, next) => {
   res.send(allBoards)
 }
 
+const getCurrentBoard = async (req, res, next) => {
+  const { id } = req.body
+
+  const currentBoard = await Board.find({_id: id})
+
+  res.send(currentBoard)
+}
+
 module.exports = {
   createBoard, 
-  getAllBoards
+  getAllBoards,
+  getCurrentBoard
 }

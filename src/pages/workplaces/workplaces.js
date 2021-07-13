@@ -14,6 +14,7 @@ const Workplaces = () => {
 
   const allBoards = async () => {
     const boards = await getAllBoards()
+    
     setWorkplaces(boards)
   }
 
