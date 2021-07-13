@@ -1,16 +1,20 @@
+const Board = require('../models/Board')
 const Tasks = require('../models/Tasks')
 
-const createTask = (req, res, next) => {
+const createTask = async (req, res, next) => {
 
   const {
     taskName,
     taskText,
-    user
+    user,
+    boardId
   } = req.body
 
   try {
     const task = new Tasks({name: taskName, text: taskText, author: user})
-    task.save()
+    await task.save()
+
+    await Board.findByIdAndUpdate({_id: boardId}, {$addToSet: {tasks: task._id}})
 
     res.send(task)
     
@@ -19,6 +23,8 @@ const createTask = (req, res, next) => {
   }
 }
 
+
 module.exports = {
-  createTask
+  createTask,
+
 }

@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.use(express.json())
 
     app.use(express.urlencoded({
-        extended: true
+        extended: true,
     }));
     
     app.use(cookieParser(secret))
