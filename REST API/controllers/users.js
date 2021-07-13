@@ -54,7 +54,8 @@ const logIn = async (req, res, next) => {
 const verifyUser = async (req, res, next) => {
   if(!req.cookies['x-auth-token']) {
     res.status(401).send('Missing cookie!')
-  }
+    return
+  } 
 
   try {
     const userId = jwt.verify(req.cookies['x-auth-token'], process.env.JWT_SECRET)

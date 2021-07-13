@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import initialData from '../../utils/initial-data'
 import Column from '../../components/columns'
+import PageWrapper from '../../components/page-wrapper'
+import BoardCreation from '../../components/board-management'
 
 const Container = styled.div`
   display: flex;
@@ -95,21 +97,23 @@ const TaskBoard = () => {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable
-        droppableId={'all-columns'}
-        direction='horizontal'
-        type='column'
-      >
-        {provided => 
-          <Container {...provided.droppableProps} ref={provided.innerRef}>
-            {columnGetter()}
-            {provided.placeholder}
-          </Container>
-        }
-      </Droppable>
-    </DragDropContext>
-
+    <PageWrapper>
+      <BoardCreation />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable
+          droppableId={'all-columns'}
+          direction='horizontal'
+          type='column'
+        >
+          {provided => 
+            <Container {...provided.droppableProps} ref={provided.innerRef}>
+              {columnGetter()}
+              {provided.placeholder}
+            </Container>
+          }
+        </Droppable>
+      </DragDropContext>
+    </PageWrapper>
   )
 }
 
