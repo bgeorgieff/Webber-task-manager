@@ -11,14 +11,11 @@ const Container = styled.div`
 const Boards = ({name, _id}) => {
 
   const context = useContext(WorkPlaceContext)
-  const history = useHistory()
 
   const handleClick = () => {
     context.workplace = name
     context.id = _id
   }
-
-
 
   return (
     <div>
