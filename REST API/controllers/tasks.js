@@ -10,6 +10,8 @@ const createTask = async (req, res, next) => {
     boardId
   } = req.body
 
+  console.log(req.body);
+
   try {
     const task = new Tasks({name: taskName, text: taskText, author: user})
     await task.save()

@@ -68,8 +68,19 @@ const verifyUser = async (req, res, next) => {
   }
 }
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find()
+
+    return res.send(users)
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 module.exports = {
   register,
   logIn,
-  verifyUser
+  verifyUser,
+  getAllUsers
 }
