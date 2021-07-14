@@ -1,18 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Input from '../input'
 import Submit from '../submit'
 import Title from '../title'
 import UserContext from '../../Contexts/Context'
-import createColumn from '../../utils/createColumn'
 import createTask from '../../utils/createTask'
 
 const InlineContainer = styled.div`
   display: inline-block;
-`
-
-const CreateColumnContainer = styled.div`
-
 `
 
 const CreateTaskContainer = styled.div``
@@ -23,53 +18,75 @@ const Form = styled.form`
 
 const BoardCreation = (props) => {
 
-  const [columnName, setColumnName] = useState('')
   const [taskName, setTaskName] = useState('')
   const [taskText, setTaskText] = useState('')
+  const [taskStartDate, setTaskStartDate] = useState('')
+  const [taskDueDate, setTaskDueDate] = useState('')
+  const [users, setUsers] = useState([])
+  const [taskAssignedTo, setTaskAssignedTo] = useState('')
+
+  const [data, setData] = useState(false)
+  
   const context = useContext(UserContext)
   const boardId = props.match.params.id
-
-  const handleColumnSubmit = async (event) => {
-    event.preventDefault()
-    
-    await createColumn('http://localhost:9999/api/create/column', {
-      columnName,
-      user: context.user._id,
-      boardId
-    })
-
-    setColumnName('')
-  }
 
   const handleTaskSubmit = async (event) => {
     event.preventDefault()
 
+
+    if(!taskName || !taskText || !taskStartDate || taskDueDate ) {
+      setData(true)
+    }
+
     await createTask('http://localhost:9999/api/create-new/task', {
       taskName, 
       taskText,
+      taskStartDate,
+      taskDueDate,
+      taskAssignedTo,
       user: context.user._id,
       boardId
     })
 
     setTaskName('')
     setTaskText('')
+    setTaskStartDate('')
+    setTaskDueDate('')
+    // setTaskAssignedTo('')
+  }
+
+  const getAllUsers = async () => {
+    const response = await fetch('http://localhost:9999/api/user/all', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+
+    const users = await response.json()
+    
+    setUsers(users)
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
+
+
+  // console.log(taskAssignedTo);
+
+  const op = () => {
+    users.map((e) => {
+      console.log(e, '<-USERS');
+    })
+    op()
   }
 
   return (
     <div>
-      <CreateColumnContainer>
-        <Form onSubmit={handleColumnSubmit}>
-          <Title title='Manage Board' />
-          <Input 
-            value={columnName}
-            onChange={(e) => setColumnName(e.target.value)}
-            label='Column Name'
-            id='columnName'
-          />
-          <Submit title='Create Column' />
-        </Form>
-      </CreateColumnContainer>
+      {/* { data ? <div>SMTH IS MISSING STYLE ME</div> :  */}
       <CreateTaskContainer>
+        <Title title="Project Tasks" />
         <Form onSubmit={handleTaskSubmit}>
           <InlineContainer>
             <Input 
@@ -86,10 +103,40 @@ const BoardCreation = (props) => {
               label='Task text'
               id='taskText'
             />
+
           </InlineContainer>
-          <Submit title='Create Task' />
+          <InlineContainer>
+            <Input 
+              value={taskStartDate}
+              onChange={(e) => setTaskStartDate(e.target.value)}
+              label='Start Date'
+              id='startDate'
+            />
+          </InlineContainer>
+          <InlineContainer>
+            <Input 
+              value={taskDueDate}
+              onChange={(e) => setTaskDueDate(e.target.value)}
+              label='Due Date'
+              id='dueDate'
+            />
+          </InlineContainer>
+          <InlineContainer>
+            <select value={taskAssignedTo} onChange={(e) => setTaskAssignedTo(e)}>
+              <option>----select----</option>
+              {
+                users.map((e) => 
+                  <option value={e.username}>{e.username}</option>
+                )
+              }
+            </select>
+          </InlineContainer>
+          <div>
+            <Submit title='Create Task' />
+          </div>
         </Form>
       </CreateTaskContainer>
+      {/* } */}
     </div>
   )
 }
