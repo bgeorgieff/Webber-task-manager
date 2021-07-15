@@ -7,13 +7,13 @@ const createTask = async (req, res, next) => {
     taskName,
     taskText,
     user,
-    boardId
+    boardId,
+    taskAssignedTo,
+    taskId
   } = req.body
 
-  console.log(req.body);
-
   try {
-    const task = new Tasks({name: taskName, text: taskText, author: user})
+    const task = new Tasks({name: taskName, text: taskText, author: user, assignedTo: taskAssignedTo})
     await task.save()
 
     await Board.findByIdAndUpdate({_id: boardId}, {$addToSet: {tasks: task._id}})
@@ -21,12 +21,31 @@ const createTask = async (req, res, next) => {
     res.send(task)
     
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
 
+const editTask = async (req, res, next) => {
+  const {
+    taskName,
+    taskText,
+    taskStartDate,
+    taskEndDate,
+    taskAssignedTo,
+    taskId
+  } = req.body
+
+  try {
+    const updatedTask = await Tasks.findOneAndUpdate({_id: taskId}, 
+      {name: taskName, text: taskText, startDate: taskStartDate, endDate: taskEndDate, assignedTo: taskAssignedTo})
+
+    res.send(updatedTask)
+  } catch (e) {
+    console.error(e)
+  }
+}
 
 module.exports = {
   createTask,
-
+  editTask
 }

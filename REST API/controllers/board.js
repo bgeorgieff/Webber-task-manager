@@ -18,12 +18,12 @@ const getAllBoards = async (req, res, next) => {
 const getCurrentBoard = async (req, res, next) => {
   const { id } = req.body
 
-  const currentBoard = await Board.find({_id: id})
-                                  .populate('tasks')
-                                  .populate('author')
-
-                      
-
+  const currentBoard = await 
+  Board.find({_id: id})
+    .populate({path: 'tasks'})
+    .populate({path: 'tasks', populate: {path: 'assignedTo'}})
+    .populate({path: 'author'})
+                                  
   res.send(currentBoard)
 }
 

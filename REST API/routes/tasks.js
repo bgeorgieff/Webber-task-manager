@@ -2,6 +2,7 @@ const router = require('express').Router()
 const controllers = require('../controllers')
 
 
-router.post('/task', controllers.tasks.createTask)
+router.post('/create-new', controllers.tasks.createTask)
+router.post('/edit-task', controllers.tasks.editTask)
 
 module.exports = router

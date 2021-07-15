@@ -1,4 +1,4 @@
-const createColumn = async (url, body) => {
+const submitEdit = async (url, body) => {
 
   try {
     const promise = await fetch(url, {
@@ -6,16 +6,15 @@ const createColumn = async (url, body) => {
       body: JSON.stringify(body),
       headers: {
         'Content-type': 'application/json'
-      },
-      credentials: 'include'
+      }
     })
+    
+    const res = await promise.json()
 
-    const response = await promise.json()
-
-    return response
+    console.log(res)
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
 
-export default createColumn
+export default submitEdit

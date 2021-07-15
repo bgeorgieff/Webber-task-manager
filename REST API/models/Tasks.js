@@ -20,9 +20,11 @@ const taskSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User'
   },
-  assignedTo: [{
-    type: mongoose.SchemaTypes.ObjectId
-  }]
+  assignedTo: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'User'
+    // NEEEEEEEEEEEEEEEDS FIX
+  }
 })
 
 module.exports = new mongoose.model('Tasks', taskSchema)

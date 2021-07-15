@@ -22,7 +22,6 @@ text-align: center
 `
 
 const TaskContainer = (props) => {
-  // console.log(props, 'in task container')
 
   return (
     <div>
