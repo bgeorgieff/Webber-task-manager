@@ -10,13 +10,12 @@ const createTask = async (url, body) => {
       credentials: 'include'
     })
 
-    const response = promise.json()
+    const response = await promise.json()
 
     return response
   } catch (e) {
     console.error(e);
   }
-
 }
 
 export default createTask

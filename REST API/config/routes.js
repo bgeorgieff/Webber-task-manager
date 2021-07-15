@@ -6,7 +6,7 @@ module.exports = (app) => {
 
     app.use('/api/board', router.board)
 
-    app.use('/api/create-new', router.tasks)
+    app.use('/api/tasks', router.tasks)
 
     app.use('*', (req, res, next) => res.send('<h1> Something went wrong. Try again. </h1>'))
 };

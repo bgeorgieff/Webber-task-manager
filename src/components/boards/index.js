@@ -8,7 +8,6 @@ const Container = styled.div`
 `
 
 const Boards = ({name, _id}) => {
-
   const context = useContext(WorkPlaceContext)
 
   const handleClick = () => {

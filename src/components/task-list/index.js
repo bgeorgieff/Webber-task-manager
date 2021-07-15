@@ -24,6 +24,26 @@ const TaskList = (props) => {
 
   return (
     <Container>
+      {/* <table>
+        <tbody>
+          <tr>
+            <td>
+              task name
+            </td>
+            <td>
+              task name
+            </td>
+            <td>
+              task name
+            </td>
+            <td>
+              task name
+            </td>
+            <td>
+              task name
+            </td>
+          </tr> */}
+
       { data ? data[0].tasks.map((e) => {
         return <TaskContainer 
                   key={e.name} 
@@ -31,11 +51,13 @@ const TaskList = (props) => {
                   author={e.author} 
                   startDate={e.startDate}
                   endDate={e.endDate}
-                  assignedTo={e.assignedTo}
+                  assignedTo={e.assignedTo.username}
                   boardId={currentBoardId}
                   taskId={e._id}
                   author={data[0].author.username}
                />}) : null}
+                       {/* </tbody>
+      </table> */}
     </Container>
   )
 }
