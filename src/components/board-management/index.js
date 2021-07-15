@@ -1,12 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { css, createGlobalStyle } from 'styled-components'
 import Input from '../input'
 import Submit from '../submit'
 import Title from '../title'
 import UserContext from '../../Contexts/Context'
 import createTask from '../../utils/createTask'
 import Select from 'react-select'
-import Calendar from 'react-calendar'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+
+const Container = styled.div`
+  padding: 20px 20px 0px 20px;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 18px;
+`
+
+const Label = styled.label`
+  display: block;
+  text-align: left;
+  font: inherit;
+`
 
 const InlineContainer = styled.div`
   display: inline-block;
@@ -18,14 +33,30 @@ const Form = styled.form`
   display: inline-block;
 `
 
+const colourStyles = {
+  control: styles => ({ ...styles, backgroundColor: 'white' }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+
+      border: '1px solid black',
+      padding: '25px'
+
+    };
+  },
+
+};
+
+
 const BoardCreation = (props) => {
 
   const [taskName, setTaskName] = useState('')
   const [taskText, setTaskText] = useState('')
-  const [taskStartDate, setTaskStartDate] = useState('')
+  const [taskStartDate, setTaskStartDate] = useState(new Date())
   const [taskDueDate, setTaskDueDate] = useState('')
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
+
   
   const context = useContext(UserContext)
   const boardId = props.match.params.id
@@ -94,26 +125,20 @@ const BoardCreation = (props) => {
               label='Task text'
               id='taskText'
             />
+          </InlineContainer>
+          <InlineContainer>
+            <Container>
+              <Label>Start Date</Label>
+              <DatePicker selected={taskStartDate} onChange={(date) => setTaskStartDate(date)} placeholderText={taskStartDate}/>
+            </Container>
+          </InlineContainer>
 
-          </InlineContainer>
           <InlineContainer>
-            <Input 
-              value={taskStartDate}
-              onChange={(e) => setTaskStartDate(e.target.value)}
-              label='Start Date'
-              id='startDate'
-            />
-          </InlineContainer>
-          <InlineContainer>
-            <Input 
-              value={taskDueDate}
-              onChange={(e) => setTaskDueDate(e.target.value)}
-              label='Due Date'
-              id='dueDate'
-            />
+            <Label>Due Date</Label>
+            <DatePicker selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} />
           </InlineContainer>
           <InlineContainer style={{width: '300px'}}>
-             <Select getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
+             <Select styles={colourStyles} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
           </InlineContainer>
           <div>
             <Submit title='Create Task' />

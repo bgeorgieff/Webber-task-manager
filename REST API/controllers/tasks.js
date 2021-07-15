@@ -1,6 +1,18 @@
 const Board = require('../models/Board')
 const Tasks = require('../models/Tasks')
 
+const getTask = async (req, res, next) => {
+  const { id } = req.body
+  
+  try {
+    const currentTask = await Tasks.find({_id: id})
+    
+    res.send(currentTask)
+  } catch (e) {
+    console.error(e);
+  } 
+}
+
 const createTask = async (req, res, next) => {
 
   const {
@@ -9,11 +21,22 @@ const createTask = async (req, res, next) => {
     user,
     boardId,
     taskAssignedTo,
-    taskId
+    taskStartDate,
+    taskDueDate,
   } = req.body
 
+  console.log(req.body);
+
   try {
-    const task = new Tasks({name: taskName, text: taskText, author: user, assignedTo: taskAssignedTo})
+    const task = new Tasks({
+      name: taskName, 
+      text: taskText, 
+      author: user, 
+      assignedTo: taskAssignedTo,
+      startDate: taskStartDate,
+      endDate: taskDueDate
+    })
+    
     await task.save()
 
     await Board.findByIdAndUpdate({_id: boardId}, {$addToSet: {tasks: task._id}})
@@ -47,5 +70,6 @@ const editTask = async (req, res, next) => {
 
 module.exports = {
   createTask,
-  editTask
+  editTask,
+  getTask
 }
