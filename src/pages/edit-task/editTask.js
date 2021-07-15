@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Input from '../../components/input'
 import Submit from '../../components/submit'
 import Title from '../../components/title'
 import Select from 'react-select'
 import PageWrapper from '../../components/page-wrapper'
-import WorkPlaceContext from '../../Contexts/Workplace'
-import getTaskBoard from '../../utils/taskBoard'
 import submitEdit from '../../utils/submitEdit'
-import { useHistory } from 'react-router-dom'
+import getCurrentTask from '../../utils/getCurrentTask'
 
 const InlineContainer = styled.div`
   display: inline-block;
@@ -27,21 +25,20 @@ const EditTask = (props) => {
   const [taskDueDate, setTaskDueDate] = useState('')
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
-  const context = useContext(WorkPlaceContext)
-  const history = useHistory()
 
-  const currentBoardId = { id: context.id}
+  const currentTaskId = props.match.params
 
   const getCurrentTaskInfo = async () => {
-    const task = await getTaskBoard(currentBoardId)
+    const getTaskInfo = await getCurrentTask('http://localhost:9999/api/tasks/get-task', currentTaskId)
     
-    setTaskName(task[0].tasks[0].name)
-    setTaskText(task[0].tasks[0].text)
-    setTaskStartDate(task[0].tasks[0].startDate)
-    setTaskDueDate(task[0].tasks[0].endDate)
-    setTaskAssignedTo(task[0].tasks[0].assignedTo)
+    setTaskName(getTaskInfo[0].name)
+    setTaskText(getTaskInfo[0].text)
+    setTaskStartDate(getTaskInfo[0].startDate)
+    setTaskDueDate(getTaskInfo[0].endDate)
+    setTaskAssignedTo(getTaskInfo[0].assignedTo)
   }
   
+
   const getAllUsers = async () => {
     const response = await fetch('http://localhost:9999/api/user/all', {
       method: 'GET',
