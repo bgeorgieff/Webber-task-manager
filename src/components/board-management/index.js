@@ -16,37 +16,47 @@ const Container = styled.div`
   margin-right: auto;
   font-size: 18px;
 `
+const ButtonContainer = styled.div`
+  margin-top: 28px;
+  padding-left: 45px;
+`
+
+const TitleContainer = styled.div`
+  padding:20px;
+`
 
 const Label = styled.label`
   display: block;
   text-align: left;
   font: inherit;
+  padding-left: 20px;
+  margin-bottom: 8px;
 `
 
 const InlineContainer = styled.div`
   display: inline-block;
 `
 
-const CreateTaskContainer = styled.div``
-
-const Form = styled.form`
-  display: inline-block;
+const CreateTaskContainer = styled.div`
+  margin-bottom: 55px;
 `
 
-const colourStyles = {
-  control: styles => ({ ...styles, backgroundColor: 'white' }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    return {
-      ...styles,
+const Form = styled.form`
+  display: block;
+`
 
-      border: '1px solid black',
-      padding: '25px'
+const TaskMessageContainer = styled.div`
+  width: 350px;
+  height: auto;
+  padding: 20px 20px 0px 20px;
+`
 
-    };
-  },
-
-};
-
+const TextInput = styled.textarea`
+  width: 850px;
+  height: 200px;
+  border-radius: 6px;
+  border: 1px solid black
+`
 
 const BoardCreation = (props) => {
 
@@ -105,44 +115,58 @@ const BoardCreation = (props) => {
     getAllUsers()
   }, [])
 
+
   return (
     <div>
       <CreateTaskContainer>
-        <Title title="Project Tasks" />
+        <TitleContainer>
+          <Title title="Project Tasks" />
+        </TitleContainer>
         <Form onSubmit={handleTaskSubmit}>
           <InlineContainer>
-            <Input 
-              value={taskName}
-              onChange={(e) => setTaskName(e.target.value)}
-              label='Task Name'
-              id='taskName'
-            />
+            <Container>
+              <Input 
+                value={taskName}
+                onChange={(e) => setTaskName(e.target.value)}
+                label='Task Name'
+                id='taskName'
+              />
+            </Container>
           </InlineContainer>
-          <InlineContainer>
-            <Input 
-              value={taskText}
-              onChange={(e) => setTaskText(e.target.value)}
-              label='Task text'
-              id='taskText'
-            />
-          </InlineContainer>
+          <TaskMessageContainer>
+            <Container>
+            <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Task Message:</label>
+              <TextInput 
+                value={taskText}
+                onChange={(e) => setTaskText(e.target.value)}
+                // label='Task text'
+                // id='taskText'
+              ></TextInput>
+            </Container>
+          </TaskMessageContainer>
           <InlineContainer>
             <Container>
-              <Label>Start Date</Label>
+              <Label htmlFor={boardId}>Start Date:</Label>
               <DatePicker selected={taskStartDate} onChange={(date) => setTaskStartDate(date)} placeholderText={taskStartDate}/>
             </Container>
           </InlineContainer>
 
           <InlineContainer>
-            <Label>Due Date</Label>
-            <DatePicker selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} />
+            <Container>
+              <Label htmlFor={boardId}>Due Date:</Label>
+              <DatePicker selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} />
+            </Container>
           </InlineContainer>
-          <InlineContainer style={{width: '300px'}}>
-             <Select styles={colourStyles} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
-          </InlineContainer>
-          <div>
+          <TaskMessageContainer style={{width: '250px'}}>
+            <Container>
+            
+              <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Assigned To:</label>
+              <Select style={{border: '1px solid black'}} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
+            </Container>
+          </TaskMessageContainer>
+          <ButtonContainer>
             <Submit title='Create Task' />
-          </div>
+          </ButtonContainer>
         </Form>
       </CreateTaskContainer>
     </div>

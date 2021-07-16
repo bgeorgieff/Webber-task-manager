@@ -23,8 +23,11 @@ const taskSchema = new mongoose.Schema({
   assignedTo: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User'
-    // NEEEEEEEEEEEEEEEDS FIX
-  }
+  },
+  comments: [{
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Comments'
+  }]
 })
 
 module.exports = new mongoose.model('Tasks', taskSchema)

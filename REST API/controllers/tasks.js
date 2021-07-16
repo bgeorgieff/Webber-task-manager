@@ -6,6 +6,9 @@ const getTask = async (req, res, next) => {
   
   try {
     const currentTask = await Tasks.find({_id: id})
+      .populate({path: 'assignedTo'})
+      .populate({path: 'comments'})
+      .populate({path: 'comments', populate: {path: 'author'}})
     
     res.send(currentTask)
   } catch (e) {
@@ -24,8 +27,6 @@ const createTask = async (req, res, next) => {
     taskStartDate,
     taskDueDate,
   } = req.body
-
-  console.log(req.body);
 
   try {
     const task = new Tasks({

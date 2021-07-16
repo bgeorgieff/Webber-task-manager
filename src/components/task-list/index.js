@@ -3,8 +3,11 @@ import styled from 'styled-components'
 import getTaskBoard from '../../utils/taskBoard'
 import TaskContainer from '../task-container'
 
-const Container = styled.div`
-  margin-top:25px
+const Table = styled.table`
+  margin-top:25px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const TaskList = (props) => {
@@ -17,48 +20,52 @@ const TaskList = (props) => {
 
     setData(taskList)
   }
-
   useEffect(() => {
     boardTasks()
   }, [])
 
   return (
-    <Container>
-      {/* <table>
-        <tbody>
-          <tr>
-            <td>
-              task name
-            </td>
-            <td>
-              task name
-            </td>
-            <td>
-              task name
-            </td>
-            <td>
-              task name
-            </td>
-            <td>
-              task name
-            </td>
-          </tr> */}
-
-      { data ? data[0].tasks.map((e) => {
-        return <TaskContainer 
-                  key={e.name} 
-                  title={e.name} 
-                  author={e.author} 
-                  startDate={e.startDate}
-                  endDate={e.endDate}
-                  assignedTo={e.assignedTo.username}
-                  boardId={currentBoardId}
-                  taskId={e._id}
-                  author={data[0].author.username}
-               />}) : null}
-                       {/* </tbody>
-      </table> */}
-    </Container>
+    <Table>
+      <thead>
+        <tr>
+          <th>
+            Task Name:
+          </th>
+          <th>
+            Assigned By:
+          </th>
+          <th>
+            Start Date:
+          </th>
+          <th>
+            Due Date:
+          </th>
+          <th>
+            Assigned To:
+          </th>
+          <th>
+            Options:
+          </th>
+          <th>
+            Details:
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        { data ? data[0].tasks
+            .map((e) => { return <TaskContainer 
+              key={e.name} 
+              title={e.name} 
+              author={e.author} 
+              startDate={e.startDate}
+              endDate={e.endDate}
+              assignedTo={e.assignedTo.username}
+              boardId={currentBoardId}
+              taskId={e._id}
+              author={data[0].author.username}
+              />}) : null}
+      </tbody>
+    </Table>
   )
 }
 

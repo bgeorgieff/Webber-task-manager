@@ -28,7 +28,7 @@ const Login = () => {
       password
     }, (user) => {
       context.logIn(user)
-      history.push('/');
+      history.push('/workplace');
     }, (e) => {
       console.log('Log In Error', e)
     })
