@@ -1,31 +1,32 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import UserContext from '../../Contexts/Context'
-import getNavigation from '../../utils/navigation'
-import Link from '../navLinks'
+
 
 const Container = styled.footer`
   width: 100%;
+  padding: 15px;
   background-color: black;
   color: #234465;
   border-top: 2px solid #234465;
   border-bottom: 2px solid #234465;
   margin-top: auto;
   display: flex;
-  position: absolute;
-  bottom: 0
+`
+
+const Para = styled.p`
+  color: white;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+`
+const RedHeart = styled.span`
+  color: red;
 `
 
 const Footer = () => {
-  const user = useContext(UserContext)
-
-  const links = getNavigation(user)
-
   return (
     <Container>
-        {
-          links.map(e => <Link key={e.title} href={e.link} title={e.title} />)
-        }
+       <Para>Created with <RedHeart>&#10084;</RedHeart> by Blagovest Georgiev</Para>
     </Container>
   )
 }

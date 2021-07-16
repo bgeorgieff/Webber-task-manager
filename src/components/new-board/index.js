@@ -13,6 +13,10 @@ text-align: center;
 margin-top: 5%;
 `
 
+const ButtonContainer = styled.div`
+  margin-top: 26px;
+`
+
 const ErrorDiv = styled.span`
   display: inline-block;
   margin-top: 18px; 
@@ -64,7 +68,9 @@ const NewBoard = () => {
           onChange={(e) => {setBoardName(e.target.value)}}
           label="Board Name"
           id="boardName" />
-        <Submit title="Create" />
+        <ButtonContainer>
+          <Submit title="Create" />
+        </ButtonContainer>
       </Form>
     </PageWrapper>
   )

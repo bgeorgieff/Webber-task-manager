@@ -8,5 +8,7 @@ module.exports = (app) => {
 
     app.use('/api/tasks', router.tasks)
 
+    app.use('/api/comments', router.comments)
+
     app.use('*', (req, res, next) => res.send('<h1> Something went wrong. Try again. </h1>'))
 };

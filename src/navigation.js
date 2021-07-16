@@ -12,6 +12,7 @@ import NewBoard from './components/new-board'
 import Workplaces from './pages/workplaces/workplaces'
 import CurrentWorkPlace from './pages/board/board'
 import EditTask from './pages/edit-task/editTask'
+import TaskView from './pages/task-preview/taskView'
 
 const Navigation = () => {
   return (
@@ -24,6 +25,7 @@ const Navigation = () => {
         <Route path='/workplace' component={Workplaces} />
         <Route path='/current-workplace/:id' component={CurrentWorkPlace} />
         <Route path='/edit/task/:id' component={EditTask} />
+        <Route path='/view/task/:id' component={TaskView} />
       </Switch>
     </BrowserRouter>
   )

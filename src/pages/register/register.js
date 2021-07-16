@@ -31,7 +31,7 @@ const Register = () => {
       rePassword
     }, (user) => {
       context.logIn(user)
-      history.push('/')
+      history.push('/workplace')
     }, (e) => {
       console.log('Register error', e);
     })
