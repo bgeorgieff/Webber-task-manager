@@ -35,7 +35,7 @@ const Workplaces = () => {
       <TitleWrapper>
         <Title title='Select your working place'/>      
       </TitleWrapper>
-      <div>
+      <div style={{display: 'flex'}}>
         {renderBoards()}
       </div>
     </PageWrapper>

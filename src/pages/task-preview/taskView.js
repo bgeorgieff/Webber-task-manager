@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import PageWrapper from '../../components/page-wrapper'
 import getCurrentTask from '../../utils/getCurrentTask'
 import Modal from '../../components/comment-modal'
+import moment from 'moment'
 
 const TaskCard = styled.div`
   width: 100%;
@@ -48,7 +50,7 @@ const Button = styled.button`
   color: white;
   font: inherit;
   font-weight: 700;
-  margin-right: auto;
+  margin: 8px;
   border: 1px solid black
 `
 
@@ -63,6 +65,7 @@ const TaskView = (props) => {
   const [assignedTo, setAssignedTo] = useState('')
   const [startDate, setStartDate] = useState('')
   const [taskText, setTaskText] = useState('')
+  const [dueDate, setDueDate] = useState('')
   const [comments, setComments] = useState()
   const [showModal, setShowModal] = useState(false)
 
@@ -75,32 +78,40 @@ const TaskView = (props) => {
     setAssignedTo(info[0].assignedTo.username)
     setTaskText(info[0].text)
     setStartDate(info[0].startDate)
+    setDueDate([info[0].endDate])
     setComments(info[0].comments)
   }
   
   const openModal = () => {
     setShowModal( prev => !prev)
   }
-  
+
+  const dueDateFormat = moment(dueDate).format('LL')
+  const startDateFormat = moment(startDate).format('LL')
+
+
   useEffect(() => {
     getTaskInfo()
   }, [])
-  
   
   return (
     <PageWrapper>
       <TaskCard>
         <Container>
-          <h1>{taskName}</h1>
+          <div>
+            <h1>{taskName}</h1>
+            <Link style={{float: 'right'}} to={`/edit/task/${props.taskId}`}>Edit Task</Link>
+          </div>
           <TaskInfo>
-            <div style={{margin: '20px', fontWeight: '700'}}>Start date: {startDate}</div>
+            <div style={{margin: '20px', fontWeight: '700'}}>Start date: {startDateFormat}</div>
             <div style={{margin: '20px', fontWeight: '700'}}>Assigned to: {assignedTo}</div>
-            <div style={{margin: '20px', fontWeight: '700'}}>Due Date:</div>
+            <div style={{margin: '20px', fontWeight: '700'}}>Due Date: {dueDateFormat}</div>
           </TaskInfo>
           <Divider />
           <Para>{taskText}</Para>
           <ButtonContainer>
             <Button onClick={openModal}>Add Comment</Button>
+            <Button>Close Task</Button>
           </ButtonContainer>
           <Modal taskId={currentTaskId} showModal={showModal} setShowModal={setShowModal} />
         </Container>

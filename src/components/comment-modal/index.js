@@ -113,6 +113,7 @@ const Modal = ({showModal, setShowModal, taskId}) => {
     })
 
     setComment('')
+    setShowModal(prev => !prev)
   }
 
   useEffect(
@@ -131,11 +132,11 @@ const Modal = ({showModal, setShowModal, taskId}) => {
             <ModalWrapper showModal={showModal}>
               <ModalContent>
                 <Form onSubmit={handleSubmit}> 
-                  <Title style={{textAlign: 'right'}} title="Leave Comment" />
+                  <Title style={{textAlign: 'left'}} title="Leave Comment" />
                   <TextContainer>
                     <TextArea value={comment} onChange={(e) => {setComment(e.target.value)}} />
                   </TextContainer>
-                  <Submit title="Submit" onClick={() => setShowModal(prev => !prev)} />
+                  <Submit title="Submit" />
                 </Form>
               </ModalContent>
               <CloseModalButton

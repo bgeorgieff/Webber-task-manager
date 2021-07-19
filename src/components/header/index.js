@@ -8,7 +8,11 @@ const Navbar = styled.header`
   width: 100%;
   background-color: #8B008B;
   display: flex;
-  flex-direction: row-reverse
+  flex-direction: row-reverse;
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  margin-bottom: 20em;
 `
 
 const Header = () => {

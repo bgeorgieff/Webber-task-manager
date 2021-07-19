@@ -1,33 +1,29 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-
-const Container = styled.footer`
+const Box = styled.div`
+  padding: 20px 20px;
+  background: black;
+  position: fixed;
+  bottom: 0;
   width: 100%;
-  padding: 15px;
-  background-color: black;
-  color: #234465;
-  border-top: 2px solid #234465;
-  border-bottom: 2px solid #234465;
-  margin-top: auto;
-  display: flex;
-`
-
-const Para = styled.p`
-  color: white;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-`
-const RedHeart = styled.span`
-  color: red;
+  
+   
+  @media (max-width: 1000px) {
+    padding: 70px 30px;
+  }
 `
 
 const Footer = () => {
   return (
-    <Container>
-       <Para>Created with <RedHeart>&#10084;</RedHeart> by Blagovest Georgiev</Para>
-    </Container>
+    <Box>
+      <footer>
+        <h3 style={{ color: "white", textAlign: "center"}}>
+          Created with <span style={{color: 'red'}}>&#10084;</span> by Blagovest Georgiev
+        </h3>
+      </footer>
+    </Box>
+    // <div></div>
   )
 }
 

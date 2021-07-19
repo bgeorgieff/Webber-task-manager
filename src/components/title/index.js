@@ -6,9 +6,9 @@ const Header = styled.h2`
   padding: 8px;
 `
 
-const Title = ({ title }) => {
+const Title = ({ title, style }) => {
   return (
-    <h1>{title}</h1>
+    <h1 style={style}>{title}</h1>
   )
 }
 

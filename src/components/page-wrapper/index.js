@@ -4,14 +4,14 @@ import Footer from '../footer'
 import styled from 'styled-components'
 
 const WrapperContainer = styled.div`
-  height:100%
+  min-height:100%;
 `
 
 const PageWrapper = (props) => {
   return (
     <WrapperContainer>
       <Header />
-      <div>
+      <div style={{paddingBottom: '5em', paddingTop: '5em'}}>
         {props.children}
       </div>
       <Footer />
