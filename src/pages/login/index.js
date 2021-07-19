@@ -19,7 +19,6 @@ const Login = () => {
   const context = useContext(UserContext)
   const history = useHistory()
 
-  // TODO check behaviour after implementation of AUTH on APP comp
   const handleSubmit = async (event) => {
     event.preventDefault()
 

@@ -1,4 +1,4 @@
-const getNavigation = (user, boardId) => {
+const getNavigation = (user) => {
   const authLinks = [
     {
       title: 'About',
