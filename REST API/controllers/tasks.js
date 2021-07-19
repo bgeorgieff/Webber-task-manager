@@ -35,7 +35,8 @@ const createTask = async (req, res, next) => {
       author: user, 
       assignedTo: taskAssignedTo,
       startDate: taskStartDate,
-      endDate: taskDueDate
+      endDate: taskDueDate,
+      status: 'Not Started'
     })
     
     await task.save()

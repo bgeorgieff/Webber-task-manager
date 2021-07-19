@@ -116,7 +116,7 @@ const EditTask = (props) => {
             />
           </InlineContainer>
           <InlineContainer style={{width: '300px'}}>
-             <Select getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
+             <Select getOptionValue={options => options.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
           </InlineContainer>
           <div>
             <Submit title='Edit Task' />

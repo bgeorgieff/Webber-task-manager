@@ -8,8 +8,12 @@ const TaskBoard = (props) => {
 
   return (
     <PageWrapper>
-      <BoardCreation {...props} />
-      <TaskList {...props} />
+      <div>
+        <BoardCreation {...props} />
+      </div>
+      <div>
+        <TaskList {...props} />
+      </div>
     </PageWrapper>
   )
 }

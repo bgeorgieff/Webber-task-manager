@@ -27,7 +27,10 @@ const taskSchema = new mongoose.Schema({
   comments: [{
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Comments'
-  }]
+  }],
+  status: {
+    type: String,
+  }
 })
 
 module.exports = new mongoose.model('Tasks', taskSchema)

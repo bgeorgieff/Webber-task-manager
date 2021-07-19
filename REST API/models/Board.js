@@ -13,6 +13,10 @@ const boardSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Tasks'
   }], 
+  taskHistory: [{
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Tasks'
+  }]
 })
 
 module.exports = mongoose.model('Board', boardSchema)
