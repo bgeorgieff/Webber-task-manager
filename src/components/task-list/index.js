@@ -31,7 +31,7 @@ const TaskList = (props) => {
   return (
     <div>
       <Container>
-        <h4>Color Scheme:</h4>
+        <h4>Color Legend:</h4>
         <div>
           <p style={{padding: '8px', display: 'inline-block'}}>Task will overdue</p>
           <span style={{backgroundColor: 'red', display: 'inline-block', width: '35px', height: '15px'}}></span>

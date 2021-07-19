@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import WorkPlaceContext from '../../Contexts/Workplace'
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
+
   padding: 40px;
   background-color: black;
   margin: 8px;
@@ -13,7 +12,6 @@ const Container = styled.div`
   color: white;
   text-align: center;
   border-radius: 4px;
-  flex-wrap: wrap;
 `
 
 const Boards = ({name, _id}) => {
@@ -27,7 +25,13 @@ const Boards = ({name, _id}) => {
   return (
     <div>
       <Container>
-        <Link style={{textDecoration: 'inherit', color: 'inherit', textAlign: 'inherit', fontSize: '46px'}} to={`/current-workplace/${_id}`} onClick={() => handleClick()}>#{name}</Link>
+        <div>
+          <Link style={{textDecoration: 'inherit', color: 'inherit', textAlign: 'inherit', fontSize: '46px'}} to={`/current-workplace/${_id}`} onClick={() => handleClick()}>#{name}</Link>
+        </div>
+        <div>
+          <Link style={{textDecoration: 'inherit', color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/current-workplace/${_id}`} >#BoardArchive, </Link>
+          <Link style={{textDecoration: 'inherit', color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/current-workplace/${_id}`} >#BoardName</Link>
+        </div>
       </Container>
     </div>
   )

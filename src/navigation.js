@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useHistory } from 'react-router'
 import {
   Switch,
   BrowserRouter,
-  Route
+  Route,
 } from 'react-router-dom'
+
 
 import HomePage from './pages/home-page/home-page'
 import Register from './pages/register/register'
@@ -13,8 +15,10 @@ import Workplaces from './pages/workplaces/workplaces'
 import CurrentWorkPlace from './pages/board/board'
 import EditTask from './pages/edit-task/editTask'
 import TaskView from './pages/task-preview/taskView'
+import LogOut from './components/logOut'
 
 const Navigation = () => {
+
   return (
     <BrowserRouter>
       <Switch>
@@ -26,6 +30,7 @@ const Navigation = () => {
         <Route path='/current-workplace/:id' component={CurrentWorkPlace} />
         <Route path='/edit/task/:id' component={EditTask} />
         <Route path='/view/task/:id' component={TaskView} />
+        <Route path='/log-out' component={LogOut}/>
       </Switch>
     </BrowserRouter>
   )
