@@ -1,11 +1,11 @@
 # Webber task-manager App
 
-Webber is a task manager app. It has the following features: 
+Webber is a task manager app. With it's help users can perform the following actions: 
 - Create Project Board;
 - Create Task
 - Assign Task 
 - Color notification on task expiration (yellow and red)
-- Task Arhive 
+- Task Archive 
 
 ## How it works
 
