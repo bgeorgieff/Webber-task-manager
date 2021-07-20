@@ -55,14 +55,16 @@ const editTask = async (req, res, next) => {
     taskName,
     taskText,
     taskStartDate,
-    taskEndDate,
+    taskDueDate,
     taskAssignedTo,
     taskId
   } = req.body
 
+  console.log(req.body)
+
   try {
     const updatedTask = await Tasks.findOneAndUpdate({_id: taskId}, 
-      {name: taskName, text: taskText, startDate: taskStartDate, endDate: taskEndDate, assignedTo: taskAssignedTo})
+      {name: taskName, text: taskText, startDate: taskStartDate, endDate: taskDueDate, assignedTo: taskAssignedTo})
 
     res.send(updatedTask)
   } catch (e) {

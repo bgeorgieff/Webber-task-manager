@@ -9,9 +9,8 @@ const submitEdit = async (url, body) => {
       }
     })
     
-    const res = await promise.json()
-
-    console.log(res)
+    const response = await promise.json()
+    return response
   } catch (e) {
     console.error(e)
   }

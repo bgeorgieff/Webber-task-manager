@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import styled, { css, createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import Input from '../input'
 import Submit from '../submit'
 import Title from '../title'
@@ -8,6 +8,7 @@ import createTask from '../../utils/createTask'
 import Select from 'react-select'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import moment from 'moment'
 
 const Container = styled.div`
   padding: 20px 20px 0px 20px;
@@ -147,14 +148,14 @@ const BoardCreation = (props) => {
           <InlineContainer>
             <Container>
               <Label htmlFor={boardId}>Start Date:</Label>
-              <DatePicker selected={taskStartDate} onChange={(date) => setTaskStartDate(date)} placeholderText={taskStartDate}/>
+              <DatePicker minDate={moment().toDate()} selected={taskStartDate} onChange={(date) => setTaskStartDate(date)} placeholderText={taskStartDate}/>
             </Container>
           </InlineContainer>
 
           <InlineContainer>
             <Container>
               <Label htmlFor={boardId}>Due Date:</Label>
-              <DatePicker selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} />
+              <DatePicker minDate={moment().toDate()} selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} />
             </Container>
           </InlineContainer>
           <TaskMessageContainer style={{width: '250px'}}>
