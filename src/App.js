@@ -37,7 +37,7 @@ const logIn = (user) => {
         setLoading(false)
       }
     }).catch(err => console.error(err))
-  }, [])
+  }, [loading, user])
 
   if (loading === null) {
     return (

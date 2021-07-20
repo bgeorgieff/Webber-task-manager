@@ -27,8 +27,21 @@ const getCurrentBoard = async (req, res, next) => {
   res.send(currentBoard)
 }
 
+const archiveTask = async (req, res, next) => {
+  const { 
+    taskId,
+    boardId
+  } = req.body
+
+  await Board.findOneAndUpdate({_id: boardId}, {$addToSet: {taskHistory: taskId}})
+  await Board.findOneAndUpdate({_id: boardId}, {$pull: {tasks: taskId}})
+
+  res.status('400').send('successfully archived')
+}
+
 module.exports = {
   createBoard, 
   getAllBoards,
-  getCurrentBoard
+  getCurrentBoard,
+  archiveTask
 }

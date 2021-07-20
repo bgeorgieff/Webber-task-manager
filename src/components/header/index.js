@@ -17,7 +17,7 @@ const Navbar = styled.header`
 
 const Header = () => {
   const user = useContext(UserContext)
-  
+
   const links = getNavigation(user)
 
   return (

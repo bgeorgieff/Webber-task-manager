@@ -1,5 +1,6 @@
 const Board = require('../models/Board')
 const Tasks = require('../models/Tasks')
+const User = require('../models/Users')
 
 const getTask = async (req, res, next) => {
   const { id } = req.body
@@ -42,6 +43,7 @@ const createTask = async (req, res, next) => {
     await task.save()
 
     await Board.findByIdAndUpdate({_id: boardId}, {$addToSet: {tasks: task._id}})
+    await User.findByIdAndUpdate({_id: user}, {$addToSet: {openedTasks: task._id}})
 
     res.send(task)
     
@@ -60,8 +62,6 @@ const editTask = async (req, res, next) => {
     taskId
   } = req.body
 
-  console.log(req.body)
-
   try {
     const updatedTask = await Tasks.findOneAndUpdate({_id: taskId}, 
       {name: taskName, text: taskText, startDate: taskStartDate, endDate: taskDueDate, assignedTo: taskAssignedTo})
@@ -72,8 +72,25 @@ const editTask = async (req, res, next) => {
   }
 }
 
+const getMyTasks = async (req, res, next) => {
+
+  console.log(req.body);
+
+  // try {
+  //   // const getTasks = await User.find({_id: id}).populate('openedTasks')
+
+  //   // res.send(getTasks)
+
+  // } catch (e) {
+  //   console.error(e);
+  // }
+}
+
+
+
 module.exports = {
   createTask,
   editTask,
-  getTask
+  getTask, 
+  getMyTasks
 }

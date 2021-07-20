@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import moment from 'moment'
 
@@ -16,12 +16,11 @@ const TaskContainer = (props) => {
   const [lessThanThreeDays, setLessThanThreeDays] = useState(false)
   const [overdue, setOverdue] = useState(false)
   const [moreThanAWeek, setMoreThenAWeek] = useState(false)
+  const params = useParams()
 
   const formattedStartDate = moment(props.startDate).format('LL')
   const formattedEndDate = moment(props.endDate).format('LL')
   const diff = moment(props.startDate).diff(props.endDate, 'days')
-
-  console.log(diff);
 
   const getDiff = () => {
     if(diff >= 0) {
@@ -76,7 +75,7 @@ const TaskContainer = (props) => {
       }>
         <div>
           <Para>
-            <Link to={`/delete/task/${props.taskId}`}>Archive Task</Link>
+            <Link to={`/archive-task/${props.taskId}&boarId=${params.id}`}>Archive Task</Link>
           </Para>
         </div>
       </TableData>
