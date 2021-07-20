@@ -94,13 +94,15 @@ const TaskView = (props) => {
     getTaskInfo()
   }, [])
   
+console.log(props);
+
   return (
     <PageWrapper>
       <TaskCard>
         <Container>
           <div>
             <h1>{taskName}</h1>
-            <Link style={{float: 'right'}} to={`/edit/task/${props.taskId}`}>Edit Task</Link>
+            <Link style={{float: 'right'}} to={`/edit/task/${props.match.params.id}`}>Edit Task</Link>
           </div>
           <TaskInfo>
             <div style={{margin: '20px', fontWeight: '700'}}>Start date: {startDateFormat}</div>
