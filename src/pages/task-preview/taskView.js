@@ -94,8 +94,6 @@ const TaskView = (props) => {
     getTaskInfo()
   }, [])
   
-console.log(props);
-
   return (
     <PageWrapper>
       <TaskCard>

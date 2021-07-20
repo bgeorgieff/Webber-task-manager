@@ -1,36 +1,47 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
+import { useParams } from 'react-router'
+import PageWrapper from '../../components/page-wrapper'
 import styled from 'styled-components'
-import getTaskBoard from '../../utils/taskBoard'
-import TaskContainer from '../task-container'
+import TaskContainer from '../../components/task-container'
+import getMyTasks from '../../utils/getMyTasks'
+import UserContext from '../../Contexts/Context'
 
 const Container = styled.div`
-  padding: 26px;
+padding: 26px;
 `
 
 const Table = styled.table`
-  margin-top:25px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+margin-top:25px;
+max-width: 900px;
+margin-left: auto;
+margin-right: auto;
 `
 
-const TaskList = (props) => {
-  const [data, setData] = useState()
+const MyTaskList = (props) => {
 
-  const currentBoardId = { id: props.match.params.id }
+  const context = useContext(UserContext)
 
-  const boardTasks = async () => {
-    const taskList = await getTaskBoard(currentBoardId)
 
-    setData(taskList)
-  }
-  
+
+  const myTasks = useCallback( async () => {
+
+    if(context.user._id) {
+    
+    }
+    const taskList = await getMyTasks('http://localhost:9999/api/tasks/my-tasks', {
+
+    })
+
+    console.log(taskList);
+  })
+
   useEffect(() => {
-    boardTasks()
-  }, [])
-  
+    myTasks()
+  }, [myTasks])
+
+
   return (
-    <div>
+    <PageWrapper>
       <Container>
         <h4>Color Legend:</h4>
         <div>
@@ -69,8 +80,9 @@ const TaskList = (props) => {
           </tr>
         </thead>
         <tbody>
-          { data ? data[0].tasks
-              .map((e) => { return <TaskContainer 
+          {/* { data ? data[0].tasks
+            .map((e) => { 
+              return <TaskContainer 
                 key={e.name} 
                 title={e.name} 
                 author={e.author} 
@@ -80,11 +92,11 @@ const TaskList = (props) => {
                 boardId={currentBoardId}
                 taskId={e._id}
                 author={data[0].author.username}
-                />}) : null}
+              />}) : null} */}
         </tbody>
       </Table>
-    </div>
+    </PageWrapper>
   )
 }
 
-export default TaskList
+export default MyTaskList

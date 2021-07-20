@@ -63,10 +63,13 @@ const NewBoard = () => {
       <Form onSubmit={handleSubmit}> 
         <Title title="Create Board" />
         {error ? <ErrorDiv>You Must Choose A Name</ErrorDiv> : null}
+        <div style={{padding: '8px'}}>
+          <p style={{font: 'inherit', fontSize: '18px'}}>Here you can create new Project boards</p>
+        </div>
         <Input 
           value={boardName}
           onChange={(e) => {setBoardName(e.target.value)}}
-          label="Board Name"
+          label="Write Your Board Name"
           id="boardName" />
         <ButtonContainer>
           <Submit title="Create" />

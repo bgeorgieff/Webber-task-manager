@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { useHistory } from 'react-router'
+import React from 'react'
 import {
   Switch,
   BrowserRouter,
@@ -16,6 +15,8 @@ import CurrentWorkPlace from './pages/board/board'
 import EditTask from './pages/edit-task/editTask'
 import TaskView from './pages/task-preview/taskView'
 import LogOut from './components/logOut'
+import MyTaskList from './components/my-task-list'
+import ArhiveTask from './components/arhive-task'
 
 const Navigation = () => {
 
@@ -30,6 +31,8 @@ const Navigation = () => {
         <Route path='/current-workplace/:id' component={CurrentWorkPlace} />
         <Route path='/edit/task/:id' component={EditTask} />
         <Route path='/view/task/:id' component={TaskView} />
+        <Route path='/my-tasks/:userId' component={MyTaskList} />
+        <Route path='/archive-task/:id' component={ArhiveTask} />
         <Route path='/log-out' component={LogOut}/>
       </Switch>
     </BrowserRouter>

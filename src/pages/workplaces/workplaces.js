@@ -28,7 +28,7 @@ const Workplaces = () => {
 
   useEffect(() => {
     allBoards()
-  }, [])
+  }, [workplaces])
 
   return ( 
     <PageWrapper>
