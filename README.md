@@ -29,5 +29,5 @@ The project is build with ReactJS for front-end and ExpressJS with MongoDB for b
 - react-spring
 - styled-components
 
-### How to run the app
+## How to run the app
 To run the app locally, you can run "npm install" in your terminal in both folders - RestAPI and Webber app
