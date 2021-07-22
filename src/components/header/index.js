@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import UserContext from '../../Contexts/Context'
 import getNavigation from '../../utils/navigation'
 import Link from '../navLinks'
 
@@ -16,7 +15,7 @@ const Navbar = styled.header`
 `
 
 const Header = () => {
-  const user = useContext(UserContext)
+  const user = sessionStorage.getItem('id')
 
   const links = getNavigation(user)
 

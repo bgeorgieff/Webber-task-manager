@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Redirect } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 const ArhiveTask = (props) => {
-
-const [taskId, boardId] = props.match.params.id.split('&boarId=')
+  const [taskId, boardId] = props.match.params.id.split('&boarId=')
 
   useEffect(async () => {
     fetch('http://localhost:9999/api/board/archive-task', {
@@ -20,7 +20,7 @@ const [taskId, boardId] = props.match.params.id.split('&boarId=')
   })
 
   return (
-    <Redirect to={`/current-workplace/${boardId}`} />
+    <Redirect to={`/workplace`} />
   )
 }
 

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Input from '../input'
 import Submit from '../submit'
 import Title from '../title'
-import UserContext from '../../Contexts/Context'
 import createTask from '../../utils/createTask'
 import Select from 'react-select'
 import DatePicker from "react-datepicker"
@@ -68,10 +67,9 @@ const BoardCreation = (props) => {
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
 
-  
-  const context = useContext(UserContext)
   const boardId = props.match.params.id
 
+  
   const handleTaskSubmit = async (event) => {
     event.preventDefault()
 
@@ -81,7 +79,7 @@ const BoardCreation = (props) => {
       taskStartDate,
       taskDueDate,
       taskAssignedTo,
-      user: context.user._id,
+      user: sessionStorage.getItem('id'),
       boardId
     })
 
@@ -91,6 +89,8 @@ const BoardCreation = (props) => {
     setTaskDueDate('')
     setTaskAssignedTo('')
   }
+
+  console.log(taskAssignedTo);
 
   const getAllUsers = async () => {
     const response = await fetch('http://localhost:9999/api/user/all', {

@@ -97,7 +97,7 @@ const Modal = ({showModal, setShowModal, taskId}) => {
     e => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log('I pressed')
+        console.log(`It's pressed`)
       }
     },
     [setShowModal, showModal]

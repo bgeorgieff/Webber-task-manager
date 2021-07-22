@@ -37,9 +37,7 @@ const getNavigation = (user) => {
     },
   ]
 
-  const loggedIn = user.user && user.user.loggedIn
-
-  return loggedIn ? authLinks : guestLinks
+  return user ? authLinks : guestLinks
 }
 
 export default getNavigation

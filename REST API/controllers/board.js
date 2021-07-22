@@ -35,6 +35,7 @@ const archiveTask = async (req, res, next) => {
 
   await Board.findOneAndUpdate({_id: boardId}, {$addToSet: {taskHistory: taskId}})
   await Board.findOneAndUpdate({_id: boardId}, {$pull: {tasks: taskId}})
+  // await User.findOneAndUpdate({})
 
   res.status('400').send('successfully archived')
 }

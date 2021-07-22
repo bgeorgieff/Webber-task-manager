@@ -5,6 +5,7 @@ const App = (props) => {
 
 const [user, setUser] = useState(null)
 const [loading, setLoading] = useState(true)
+const [update, setUpdate] = useState(false)
 
 const logIn = (user) => {
   setUser({
@@ -19,6 +20,11 @@ const logIn = (user) => {
       loggedIn: false,
       user: null
     })
+
+  }
+
+  const updateTrigger = () => {
+    setUpdate(!update)
   }
 
   useEffect(() => {
@@ -34,10 +40,9 @@ const logIn = (user) => {
     }).then((user) => {
       if(user) {
         logIn(user)
-        setLoading(false)
       }
     }).catch(err => console.error(err))
-  }, [loading, user])
+  }, [update])
 
   if (loading === null) {
     return (
@@ -50,6 +55,7 @@ const logIn = (user) => {
       user,
       logIn,
       logOut,
+      updateTrigger
     }}>
       {props.children}
     </UserContext.Provider>

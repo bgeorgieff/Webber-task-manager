@@ -17,7 +17,6 @@ const Container = styled.div`
 
 const Boards = ({name, _id}) => {
   const context = useContext(WorkPlaceContext)
-  // const user = useContext(UserContext)
 
   const handleClick = () => {
     context.workplace = name
@@ -33,7 +32,7 @@ const Boards = ({name, _id}) => {
         <div>
           <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/current-workplace/${_id}`} >#BoardArchive</Link><span>, </span>
           <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/current-workplace/${_id}`} >#BoardName</Link><span>, </span>
-          <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/my-tasks/`} >#MyTasks</Link>
+          <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/my-tasks/${sessionStorage.getItem('id')}&boarId=${_id}`} >#MyTasks</Link>
         </div>
       </Container>
     </div>

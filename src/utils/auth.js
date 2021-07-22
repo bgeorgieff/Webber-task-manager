@@ -12,6 +12,7 @@ const authenticate = async (url, body, onSuccess, onFailure) => {
     const response = await promise.json()
 
     if(promise.ok) {
+      sessionStorage.setItem('id', response._id)
       return onSuccess({
         username: response.username,
         id: response._id

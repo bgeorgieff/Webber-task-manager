@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import getTaskBoard from '../../utils/taskBoard'
 import TaskContainer from '../task-container'
@@ -16,19 +17,20 @@ const Table = styled.table`
 
 const TaskList = (props) => {
   const [data, setData] = useState()
+  const params = useParams()
 
-  const currentBoardId = { id: props.match.params.id }
-
+  const currentBoardId = params.id
+  
   const boardTasks = async () => {
-    const taskList = await getTaskBoard(currentBoardId)
-
+    const taskList = await getTaskBoard({id: currentBoardId})
+    
     setData(taskList)
   }
   
   useEffect(() => {
     boardTasks()
   }, [])
-  
+    
   return (
     <div>
       <Container>
