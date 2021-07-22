@@ -1,4 +1,6 @@
 const Board = require('../models/Board')
+const User = require('../models/Users')
+const Tasks = require('../models/Tasks')
 
 const createBoard = async (req, res, next) => {
   const { name, author } = req.body
@@ -30,12 +32,14 @@ const getCurrentBoard = async (req, res, next) => {
 const archiveTask = async (req, res, next) => {
   const { 
     taskId,
-    boardId
+    boardId,
+    userId
   } = req.body
 
+  await Tasks.findOneAndUpdate({_id: taskId}, {$pull: {assignedTo}, $addToSet: {assignedTo: userId}})
   await Board.findOneAndUpdate({_id: boardId}, {$addToSet: {taskHistory: taskId}})
   await Board.findOneAndUpdate({_id: boardId}, {$pull: {tasks: taskId}})
-  // await User.findOneAndUpdate({})
+  await User.findOneAndUpdate({_id: userId}, {$addToSet: {closedTasks: taskId}, $pull: {openedTasks: taskId}})
 
   res.status('400').send('successfully archived')
 }

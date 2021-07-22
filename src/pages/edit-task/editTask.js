@@ -86,7 +86,6 @@ const EditTask = (props) => {
 
     setTaskAssignedTo(getTaskInfo[0].assignedTo)
   }
-  console.log(taskAssignedTo);
 
   const boardId = props.match.params.id
 
