@@ -8,6 +8,7 @@ const LogOut = () => {
 
   useEffect(() => {
     context.logOut()
+    sessionStorage.removeItem('id')
   }, [])
   
   return (

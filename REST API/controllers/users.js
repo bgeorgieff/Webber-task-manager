@@ -40,7 +40,8 @@ const logIn = async (req, res, next) => {
 
   const user = await User.findOne({ username })
 
-  const status = bcrypt.compare(password, user.password)
+  const status = await bcrypt.compare(password, user.password)
+
 
   if(status) {
     const token = jwt.sign(user.id, process.env.JWT_SECRET)

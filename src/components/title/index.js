@@ -8,7 +8,7 @@ const Header = styled.h2`
 
 const Title = ({ title, style }) => {
   return (
-    <h1 style={style}>{title}</h1>
+    <Header style={style}>{title}</Header>
   )
 }
 

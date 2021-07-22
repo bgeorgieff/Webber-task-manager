@@ -16,11 +16,11 @@ const UserSchema = new mongoose.Schema({
   },
   openedTasks: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Active'
+    ref: 'Tasks'
   }],
   closedTasks: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Closed'
+    ref: 'Tasks'
   }]
 })
 

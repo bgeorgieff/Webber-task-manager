@@ -86,6 +86,7 @@ const EditTask = (props) => {
 
     setTaskAssignedTo(getTaskInfo[0].assignedTo)
   }
+  console.log(taskAssignedTo);
 
   const boardId = props.match.params.id
 
@@ -117,7 +118,7 @@ const EditTask = (props) => {
       taskText,
       taskStartDate,
       taskDueDate,
-      taskAssignedTo,
+      taskAssignedTo: taskAssignedTo.userId,
       taskId: props.match.params.id
     })  
 
@@ -172,7 +173,7 @@ const EditTask = (props) => {
             <Container>
             {/* need default selected user */}
               <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Assigned To:</label>
-              <Select minDate={moment().toDate()} style={{border: '1px solid black'}} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
+              <Select minDate={moment().toDate()} style={{border: '1px solid black'}} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e)} />
             </Container>
           </TaskMessageContainer>
           <ButtonContainer>

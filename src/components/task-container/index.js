@@ -18,6 +18,8 @@ const TaskContainer = (props) => {
   const [moreThanAWeek, setMoreThenAWeek] = useState(false)
   const params = useParams()
 
+  const boardId = params.id
+
   const formattedStartDate = moment(props.startDate).format('LL')
   const formattedEndDate = moment(props.endDate).format('LL')
   const diff = moment(props.startDate).diff(props.endDate, 'days')
@@ -75,7 +77,7 @@ const TaskContainer = (props) => {
       }>
         <div>
           <Para>
-            <Link to={`/archive-task/${props.taskId}&boarId=${params.id}`}>Archive Task</Link>
+            <Link to={`/archive-task/${props.taskId}&boarId=${boardId}`}>Archive Task</Link>
           </Para>
         </div>
       </TableData>

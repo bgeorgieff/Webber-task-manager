@@ -1,44 +1,44 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import PageWrapper from '../../components/page-wrapper'
 import styled from 'styled-components'
 import TaskContainer from '../../components/task-container'
 import getMyTasks from '../../utils/getMyTasks'
-import UserContext from '../../Contexts/Context'
+
 
 const Container = styled.div`
-padding: 26px;
+  padding: 26px;
 `
 
 const Table = styled.table`
-margin-top:25px;
-max-width: 900px;
-margin-left: auto;
-margin-right: auto;
+  margin-top:25px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 `
 
-const MyTaskList = (props) => {
+const MyTaskList = () => {
+  const params = useParams()
+  const [data, setData] = useState()
+  const [tasks, setTasks] = useState(false)
 
-  const context = useContext(UserContext)
 
+  const userId = params.id.split('&boarId=')
 
-
-  const myTasks = useCallback( async () => {
-
-    if(context.user._id) {
-    
-    }
-    const taskList = await getMyTasks('http://localhost:9999/api/tasks/my-tasks', {
-
+  const myTasks = async () => {
+    const tasks = await getMyTasks('http://localhost:9999/api/tasks/my-tasks', {
+      user: userId[0]
     })
 
-    console.log(taskList);
-  })
+    if(tasks[0].openedTasks.length > 0) {
+      setData(tasks[0].openedTasks)
+      setTasks(true)
+    }
+  }
 
   useEffect(() => {
     myTasks()
-  }, [myTasks])
-
+  },  [data, tasks])
 
   return (
     <PageWrapper>
@@ -53,6 +53,7 @@ const MyTaskList = (props) => {
           <span style={{backgroundColor: 'yellow', display: 'inline-block', width: '35px', height: '15px'}}></span>
         </div>
       </Container>
+      { tasks ?
       <Table>
         <thead>
           <tr>
@@ -80,8 +81,7 @@ const MyTaskList = (props) => {
           </tr>
         </thead>
         <tbody>
-          {/* { data ? data[0].tasks
-            .map((e) => { 
+          { data ? data.map((e) => { 
               return <TaskContainer 
                 key={e.name} 
                 title={e.name} 
@@ -89,12 +89,12 @@ const MyTaskList = (props) => {
                 startDate={e.startDate}
                 endDate={e.endDate}
                 assignedTo={e.assignedTo.username}
-                boardId={currentBoardId}
+                boardId={userId[1]}
                 taskId={e._id}
                 author={data[0].author.username}
-              />}) : null} */}
+              />}) : null}
         </tbody>
-      </Table>
+      </Table> : <p>You currently don't have any tasks</p>}
     </PageWrapper>
   )
 }
