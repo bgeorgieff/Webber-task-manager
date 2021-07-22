@@ -18,7 +18,7 @@ const TaskContainer = (props) => {
   const [moreThanAWeek, setMoreThenAWeek] = useState(false)
   const params = useParams()
 
-  const boardId = params.id
+  const boardId = params.id.split('&boarId=')[1] || params.id
 
   const formattedStartDate = moment(props.startDate).format('LL')
   const formattedEndDate = moment(props.endDate).format('LL')

@@ -90,8 +90,6 @@ const BoardCreation = (props) => {
     setTaskAssignedTo('')
   }
 
-  console.log(taskAssignedTo);
-
   const getAllUsers = async () => {
     const response = await fetch('http://localhost:9999/api/user/all', {
       method: 'GET',
