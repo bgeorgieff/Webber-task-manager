@@ -1,6 +1,5 @@
 const Board = require('../models/Board')
 const User = require('../models/Users')
-const Tasks = require('../models/Tasks')
 
 const createBoard = async (req, res, next) => {
   const { name, author } = req.body
@@ -25,6 +24,9 @@ const getCurrentBoard = async (req, res, next) => {
     .populate({path: 'tasks'})
     .populate({path: 'tasks', populate: {path: 'assignedTo'}})
     .populate({path: 'author'})
+    .populate({path: 'taskHistory'})
+    .populate({path: 'taskHistory', populate: {path: 'author'}})
+    .populate({path: 'taskHistory', populate: {path: 'assignedTo'}})
                                   
   res.send(currentBoard)
 }
@@ -36,10 +38,13 @@ const archiveTask = async (req, res, next) => {
     userId
   } = req.body
 
-  await Tasks.findOneAndUpdate({_id: taskId}, {$pull: {assignedTo}, $addToSet: {assignedTo: userId}})
-  await Board.findOneAndUpdate({_id: boardId}, {$addToSet: {taskHistory: taskId}})
-  await Board.findOneAndUpdate({_id: boardId}, {$pull: {tasks: taskId}})
-  await User.findOneAndUpdate({_id: userId}, {$addToSet: {closedTasks: taskId}, $pull: {openedTasks: taskId}})
+  try {
+    await Board.findOneAndUpdate({_id: boardId}, {$addToSet: {taskHistory: taskId}})
+    await Board.findOneAndUpdate({_id: boardId}, {$pull: {tasks: taskId}})
+    await User.findOneAndUpdate({_id: userId}, {$addToSet: {closedTasks: taskId}, $pull: {openedTasks: taskId}})
+  } catch (e) {
+    console.error(e)
+  }
 
   res.status('400').send('successfully archived')
 }

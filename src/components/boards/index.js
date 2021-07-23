@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import WorkPlaceContext from '../../Contexts/Workplace'
-import UserContext from '../../Contexts/Context'
 
 const Container = styled.div`
 
@@ -30,7 +29,7 @@ const Boards = ({name, _id}) => {
           <Link style={{textDecoration: 'inherit', color: 'inherit', textAlign: 'inherit', fontSize: '46px'}} to={`/current-workplace/${_id}`} onClick={() => handleClick()}>#{name}</Link>
         </div>
         <div>
-          <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/current-workplace/${_id}`} >#BoardArchive</Link><span>, </span>
+          <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/board-archive/${_id}`} >#BoardArchive</Link><span>, </span>
           <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/current-workplace/${_id}`} >#BoardName</Link><span>, </span>
           <Link style={{color: 'inherit', textAlign: 'inherit', fontSize: '18px'}} to={`/my-tasks/${sessionStorage.getItem('id')}&boarId=${_id}`} >#MyTasks</Link>
         </div>

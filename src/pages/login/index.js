@@ -16,6 +16,7 @@ const Form = styled.form`
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
   const context = useContext(UserContext)
   const history = useHistory()
 
@@ -31,6 +32,11 @@ const Login = () => {
     }, (e) => {
       console.log('Log In Error', e)
     })
+  }
+
+  // Finish verification
+  if(username === '' || password === '') {
+    setError(true)
   }
 
   return (

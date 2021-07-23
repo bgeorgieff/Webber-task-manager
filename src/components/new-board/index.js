@@ -38,7 +38,7 @@ const NewBoard = () => {
     event.preventDefault()
 
     if(boardName) {
-      const promise = await fetch('http://localhost:9999/api/board/create', {
+      await fetch('http://localhost:9999/api/board/create', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({
@@ -50,8 +50,6 @@ const NewBoard = () => {
         },
       })
       
-      const data = await promise
-  
       history.push('/workplace')
     } else {
       setError(true)
