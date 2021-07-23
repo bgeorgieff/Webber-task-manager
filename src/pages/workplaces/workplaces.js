@@ -33,9 +33,9 @@ const Workplaces = () => {
   return ( 
     <PageWrapper>
       <TitleWrapper>
-        <Title title='Select your working place'/>      
+        <Title style={{textAlign: 'center'}} title='Select your working place'/>      
       </TitleWrapper>
-      <div style={{display: 'flex'}}>
+      <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
         {renderBoards()}
       </div>
     </PageWrapper>
