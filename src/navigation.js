@@ -18,6 +18,7 @@ import LogOut from './components/logOut'
 import MyTaskList from './components/my-task-list'
 import ArhiveTask from './components/arhive-task'
 import AboutPage from './pages/about'
+import BoardArchive from './pages/board-archive/board-archive'
 
 const Navigation = () => {
 
@@ -34,6 +35,7 @@ const Navigation = () => {
         <Route path='/view/task/:id' component={TaskView} />
         <Route path='/my-tasks/:id' component={MyTaskList} />
         <Route path='/archive-task/:id' component={ArhiveTask} />
+        <Route path='/board-archive/:id' component={BoardArchive} />
         <Route path='/log-out' component={LogOut}/>
         <Route path='/about' component={AboutPage} />
       </Switch>
