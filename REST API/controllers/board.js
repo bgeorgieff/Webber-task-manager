@@ -49,9 +49,25 @@ const archiveTask = async (req, res, next) => {
   res.status('400').send('successfully archived')
 }
 
+const changeBoardName = async (req, res, next) => {
+  const {
+    name,
+    boardId
+  } = req.body
+
+  try {
+    const newName = await Board.findOneAndUpdate({_id: boardId}, {name: name})
+
+    res.status(400).send(newName)
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 module.exports = {
   createBoard, 
   getAllBoards,
   getCurrentBoard,
-  archiveTask
+  archiveTask,
+  changeBoardName
 }
