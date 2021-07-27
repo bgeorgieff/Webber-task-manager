@@ -8,7 +8,8 @@ const LogOut = () => {
 
   useEffect(() => {
     context.logOut()
-    sessionStorage.removeItem('id')
+    document.cookie = 'x-auth-token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT'
+    window.location.reload(false)
   }, [])
   
   return (

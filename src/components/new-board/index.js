@@ -59,15 +59,14 @@ const NewBoard = () => {
   return (
     <PageWrapper>
       <Form onSubmit={handleSubmit}> 
-        <Title title="Create Board" />
+        <Title title="Create Project" />
         {error ? <ErrorDiv>You Must Choose A Name</ErrorDiv> : null}
         <div style={{padding: '8px'}}>
-          <p style={{font: 'inherit', fontSize: '18px'}}>Here you can create new Project boards</p>
         </div>
         <Input 
           value={boardName}
           onChange={(e) => {setBoardName(e.target.value)}}
-          label="Write Your Board Name"
+          label="Write Your Project Name"
           id="boardName" />
         <ButtonContainer>
           <Submit title="Create" />

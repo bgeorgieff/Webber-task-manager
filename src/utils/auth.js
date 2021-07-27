@@ -1,4 +1,4 @@
-const authenticate = async (url, body, onSuccess, onFailure) => {
+const authenticate = async (url, body, context, setError, history) => {
   try {
     const promise = await fetch(url, {
       method: 'POST',
@@ -9,19 +9,23 @@ const authenticate = async (url, body, onSuccess, onFailure) => {
       credentials: 'include'
     })
 
-    const response = await promise.json()
-
     if(promise.ok) {
-      sessionStorage.setItem('id', response._id)
-      return onSuccess({
-        username: response.username,
-        id: response._id
-      })
+      const response = await promise.json()
+
+      if(typeof response === 'object') {
+        context.logIn(response)
+        history.push('/')
+        setError(false)
+      } else {
+        setError(true)
+      }
     } else {
-      onFailure()
+
+      setError(true)
     }
+
   } catch(e) {
-    onFailure(e)
+    console.error(e)
   }
 }
 

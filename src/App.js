@@ -4,23 +4,17 @@ import UserContext from './Contexts/Context'
 const App = (props) => {
 
 const [user, setUser] = useState(null)
-const [loading, setLoading] = useState(true)
+const [loggedIn, setLogged] = useState(null)
 const [update, setUpdate] = useState(false)
 
 const logIn = (user) => {
-  setUser({
-    ...user,
-    loggedIn: true
-  })
+  setLogged(true)
+  setUser(user)
 }
 
   const logOut = () => {
-    document.cookie = "x-auth-token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
-    setUser({
-      loggedIn: false,
-      user: null
-    })
-
+    setUser(null)
+    setLogged(false)
   }
 
   const updateTrigger = () => {
@@ -31,7 +25,8 @@ const logIn = (user) => {
     fetch('http://localhost:9999/api/user/verify-user', {
       method: 'GET',
       credentials: 'include'
-    }).then((res) => {
+    })
+    .then((res) => {
       if(res.ok) {
         return res.json()
       } else {
@@ -44,7 +39,7 @@ const logIn = (user) => {
     }).catch(err => console.error(err))
   }, [update])
 
-  if (loading === null) {
+  if (loggedIn === null) {
     return (
       <div>LOADING</div>
     )
@@ -52,6 +47,7 @@ const logIn = (user) => {
 
   return (
     <UserContext.Provider value={{
+      loggedIn,
       user,
       logIn,
       logOut,

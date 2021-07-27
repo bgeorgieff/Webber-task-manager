@@ -40,13 +40,16 @@ const logIn = async (req, res, next) => {
 
   const user = await User.findOne({ username })
 
-  const status = await bcrypt.compare(password, user.password)
-
-
-  if(status) {
-    const token = jwt.sign(user.id, process.env.JWT_SECRET)
-
-    res.cookie('x-auth-token', token).send(user)
+  if(user) {
+    const status = await bcrypt.compare(password, user.password)
+    
+    if(status) {
+      const token = jwt.sign(user.id, process.env.JWT_SECRET)
+  
+      res.cookie('x-auth-token', token).send(user)
+    } else {
+      res.status(401).send('Something went wrong!')
+    }
   } else {
     res.status(401).send('Something went wrong!')
   }
@@ -69,6 +72,19 @@ const verifyUser = async (req, res, next) => {
   }
 }
 
+const logOut = async (req, res, next) => {
+
+  // TODO 
+  // FINISH API LOGOUT!
+
+  // try {
+  //   const token = jwt.sign(user.id, process.env.JWT_SECRET)
+
+  // } catch (e) {
+  //   console.error(e)
+  // }
+}
+
 const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find()
@@ -83,5 +99,6 @@ module.exports = {
   register,
   logIn,
   verifyUser,
-  getAllUsers
+  getAllUsers,
+  logOut
 }

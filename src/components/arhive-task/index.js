@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'react-router'
-import { useParams } from 'react-router-dom'
+import UserContext from '../../Contexts/Context'
 
 const ArhiveTask = (props) => {
   const [taskId, boardId] = props.match.params.id.split('&boarId=')
-  const userId = sessionStorage.getItem('id')
+  const context = useContext(UserContext)
+
+  console.log(context);
 
   useEffect(async () => {
     fetch('http://localhost:9999/api/board/archive-task', {
@@ -12,7 +14,7 @@ const ArhiveTask = (props) => {
       body: JSON.stringify({ 
         taskId: taskId,
         boardId,
-        userId
+        userId: context.user._id
       }),
       headers: {
         'Content-type': 'application/json'

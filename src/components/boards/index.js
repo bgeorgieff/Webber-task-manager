@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { MdBorderBottom } from 'react-icons/md'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
+import UserContext from '../../Contexts/Context'
 import WorkPlaceContext from '../../Contexts/Workplace'
 import BoardNameModal from '../board-name-modal'
 
@@ -19,8 +20,28 @@ const Container = styled.div`
   }
 `
 
+const Option = styled.div`
+  background-color: inherit;
+  transition: 0.3s ease;
+  border-radius: 6px;
+  :hover {
+    background-color: #13385b;
+  }
+`
+
+const ProjectNameContainer = styled.div`
+  border-bottom: 3px solid white;
+  margin-bottom: 18px;
+  transition: 0.3s ease;
+  border-radius: 6px;
+  :hover {
+    background-color: #ed1d24;
+  }
+`
+
 const Boards = ({name, _id}) => {
   const context = useContext(WorkPlaceContext)
+  const userContext = useContext(UserContext)
   const [showModal, setShowModal] = useState(false)
 
   
@@ -34,39 +55,38 @@ const Boards = ({name, _id}) => {
     context.id = _id
   }
 
-  // console.log(_id);
 
   return (
     <div>
       <Container>
-        <div style={{borderBottom: '3px solid white', marginBottom: '18px'}}>
+        <ProjectNameContainer>
           <Link style={{
             textDecoration: 'inherit', 
             color: 'inherit', 
             textAlign: 'inherit', 
             fontSize: '46px',
             fontWeight: '700'}} to={`/current-workplace/${_id}`} onClick={() => handleClick()}>#{name}</Link>
-        </div>
+        </ProjectNameContainer>
         <div>
-          <div>
+          <Option>
             <Link style={{
               color: 'inherit', 
               textAlign: 'inherit', 
               fontSize: '18px'}} to={`/board-archive/${_id}`} >#ProjectArchive</Link><span>, </span>
-          </div>
-          <div>
+          </Option>
+          <Option>
             <Link style={{
               color: 'inherit', 
               textAlign: 'inherit', 
-              fontSize: '18px'}} to={`/my-tasks/${sessionStorage.getItem('id')}&boarId=${_id}`} >#MyTasks</Link><span>, </span>
-          </div>
-          <div>
+              fontSize: '18px'}} to={`/my-tasks/${userContext.user._id}&boarId=${_id}`} >#MyTasks</Link><span>, </span>
+          </Option>
+          <Option>
             <Link style={{
               color: 'inherit', 
               textAlign: 'inherit', 
               fontSize: '18px'}} onClick={openModal} >#EditProjectName</Link><span>, </span>
             <BoardNameModal boardId={_id} showModal={showModal} setShowModal={setShowModal} />
-          </div>
+          </Option>
         </div>
       </Container>
     </div>
