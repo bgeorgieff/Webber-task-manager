@@ -20,10 +20,8 @@ const authenticate = async (url, body, context, setError, history) => {
         setError(true)
       }
     } else {
-
       setError(true)
     }
-
   } catch(e) {
     console.error(e)
   }

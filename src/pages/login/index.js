@@ -12,6 +12,7 @@ import {loginVerification} from '../../verifications/user'
 const Form = styled.form`
   text-align: center;
   margin-top: 5%;
+  position: relative;
 `
 
 const Login = () => {
@@ -22,11 +23,6 @@ const Login = () => {
   const history = useHistory()
   const [verifiedUser, setVerifiedUser] = useState(true)
   
-  
-  // if(!verified) {
-    //   return(<div>wooooong</div>)
-    // }
-    
   const handleSubmit = async (event) => {
     event.preventDefault()
     
@@ -34,7 +30,6 @@ const Login = () => {
 
     if(!verified) {
       setVerifiedUser(false)
-      console.log(verifiedUser);
     } else {
       setVerifiedUser(true)
     }
@@ -57,8 +52,9 @@ const Login = () => {
 
   return (
     <PageWrapper>
-      {error ? <div>woooong</div> : null}
-      { verifiedUser ? null : <div>Wrong</div>}
+      {error || !verifiedUser ? 
+      <div style={{marginLeft: 'auto', marginRight:'auto', textAlign: 'center', width: '100%'}}>Your input is wrong</div> 
+      : null}
       <Form onSubmit={handleSubmit}> 
         <Title title="Log In" />
         <Input 
@@ -72,7 +68,9 @@ const Login = () => {
           onChange={(e) => {setPassword(e.target.value)}}
           label="Password"
           id="password" />
-        <Submit title="Log In" />
+        <div style={{marginTop: '24px'}}>
+          <Submit title="Log In" />
+        </div>
       </Form>
     </PageWrapper>
   )

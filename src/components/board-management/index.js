@@ -70,10 +70,9 @@ const BoardCreation = (props) => {
   const context = useContext(UserContext)
 
   const boardId = props.match.params.id
-  console.log(context);
+ 
   const handleTaskSubmit = async (event) => {
     event.preventDefault()
-
 
     await createTask('http://localhost:9999/api/tasks/create-new', {
       taskName, 
