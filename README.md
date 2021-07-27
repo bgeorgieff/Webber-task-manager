@@ -18,6 +18,7 @@ The project is build with ReactJS for front-end and ExpressJS with MongoDB for b
 - express;
 - jsonwebtoken;
 - mongoose;
+- .env dependancies - DB_URL, APP_URL, SECRET, JWT_SECRET. 
 
 ### FrontEnd dependancies:
 - moment
