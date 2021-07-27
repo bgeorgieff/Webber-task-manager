@@ -7,19 +7,18 @@ const Container = styled.div`
   display: flex
 `
 
-// const style = {
-//   color: white;
-//   text-decoration: none;
-//   margin: 8px;
-//   font-weight: 700;
-// }
-
+const navStyle = {
+  color: 'white',
+  textDecoration: 'none',
+  margin: '8px',
+  fontWeight: 700,
+}
 
 const navLink = ({title, href}) => {
   
   return (
     <Container>
-      <Link to={href}>
+      <Link style={navStyle} to={href}>
         {title}
       </Link>
     </Container>

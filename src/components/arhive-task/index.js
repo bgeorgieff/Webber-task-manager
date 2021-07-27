@@ -6,8 +6,6 @@ const ArhiveTask = (props) => {
   const [taskId, boardId] = props.match.params.id.split('&boarId=')
   const context = useContext(UserContext)
 
-  console.log(context);
-
   useEffect(async () => {
     fetch('http://localhost:9999/api/board/archive-task', {
       method: 'POST',

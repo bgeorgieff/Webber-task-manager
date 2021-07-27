@@ -58,7 +58,9 @@ const Register = () => {
           onChange={(e) => {setRepassword(e.target.value)}}
           label="Repeat Password"
           id="repeat-password" />
-        <Submit title="Register" />
+        <div style={{marginTop: '24px'}}>
+          <Submit title="Register" />
+        </div>
       </Form>
     </PageWrapper>
   )

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Switch,
   BrowserRouter,
   Route,
+  Redirect,
 } from 'react-router-dom'
 
 
@@ -19,24 +20,26 @@ import MyTaskList from './components/my-task-list'
 import ArhiveTask from './components/arhive-task'
 import AboutPage from './pages/about'
 import BoardArchive from './pages/board-archive/board-archive'
+import UserContext from './Contexts/Context'
 
 const Navigation = () => {
+  const { loggedIn } = useContext(UserContext)
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route path='/register' component={Register} />
-        <Route path='/log-in' component={Login} />
-        <Route path='/create-board' component={NewBoard} />
-        <Route path='/workplace' component={Workplaces} />
-        <Route path='/current-workplace/:id' component={CurrentWorkPlace} />
-        <Route path='/edit/task/:id' component={EditTask} />
-        <Route path='/view/task/:id' component={TaskView} />
-        <Route path='/my-tasks/:id' component={MyTaskList} />
-        <Route path='/archive-task/:id' component={ArhiveTask} />
-        <Route path='/board-archive/:id' component={BoardArchive} />
-        <Route path='/log-out' component={LogOut}/>
+        <Route exact path='/' render={() => loggedIn ? <Redirect to='/workplace' /> : <HomePage /> } />
+        <Route path='/register' render={() => loggedIn ? <Redirect to='/workplace' /> : <Register />} />
+        <Route path='/log-in' render={() => loggedIn ? <Redirect to='/workplace' /> : <Login />} />
+        <Route path='/create-board' render={() => loggedIn ? <NewBoard /> : <Redirect to='/login' />} />
+        <Route path='/workplace' render={() => loggedIn ? <Workplaces /> : <Redirect to='/login' />} />
+        <Route path='/current-workplace/:id' render={() => loggedIn ? <CurrentWorkPlace /> : <Redirect to='/login' /> } />
+        <Route path='/edit/task/:id' render={() => loggedIn ? <EditTask /> : <Redirect to='/login' />} />
+        <Route path='/view/task/:id' render={() => loggedIn ? <TaskView /> : <Redirect to='/login' />} />
+        <Route path='/my-tasks/:id' render={() => loggedIn ? <MyTaskList /> : <Redirect to='/login' />} />
+        <Route path='/archive-task/:id' render={() => loggedIn ? <ArhiveTask /> : <Redirect to='/login' />} />
+        <Route path='/board-archive/:id' render={() => loggedIn ? <BoardArchive /> : <Redirect to='/login' />} />
+        <Route path='/log-out' render={() => loggedIn ? <LogOut /> : <Redirect to='/login' />} />
         <Route path='/about' component={AboutPage} />
       </Switch>
     </BrowserRouter>
