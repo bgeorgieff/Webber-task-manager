@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Input from '../input'
 import Submit from '../submit'
@@ -8,6 +8,7 @@ import Select from 'react-select'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from 'moment'
+import UserContext from '../../Contexts/Context'
 
 const Container = styled.div`
   padding: 20px 20px 0px 20px;
@@ -66,12 +67,13 @@ const BoardCreation = (props) => {
   const [taskDueDate, setTaskDueDate] = useState('')
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
+  const context = useContext(UserContext)
 
   const boardId = props.match.params.id
-
-  
+  console.log(context);
   const handleTaskSubmit = async (event) => {
     event.preventDefault()
+
 
     await createTask('http://localhost:9999/api/tasks/create-new', {
       taskName, 
@@ -79,7 +81,7 @@ const BoardCreation = (props) => {
       taskStartDate,
       taskDueDate,
       taskAssignedTo,
-      user: sessionStorage.getItem('id'),
+      user: context.user._id,
       boardId
     })
 

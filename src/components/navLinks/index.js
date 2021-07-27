@@ -1,25 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 
 const Container = styled.div`
   display: flex
 `
 
-const Links = styled.a`
-  color: white;
-  text-decoration: none;
-  margin: 8px;
-  font-weight: 700;
-`
+// const style = {
+//   color: white;
+//   text-decoration: none;
+//   margin: 8px;
+//   font-weight: 700;
+// }
+
 
 const navLink = ({title, href}) => {
   
   return (
     <Container>
-      <Links href={href}>
+      <Link to={href}>
         {title}
-      </Links>
+      </Link>
     </Container>
   )
 }

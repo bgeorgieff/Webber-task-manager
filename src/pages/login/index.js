@@ -7,6 +7,7 @@ import Submit from '../../components/submit'
 import styled from 'styled-components'
 import UserContext from '../../Contexts/Context'
 import authenticate from '../../utils/auth'
+import {loginVerification} from '../../verifications/user'
 
 const Form = styled.form`
   text-align: center;
@@ -16,31 +17,48 @@ const Form = styled.form`
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState()
   const context = useContext(UserContext)
   const history = useHistory()
-
+  const [verifiedUser, setVerifiedUser] = useState(true)
+  
+  
+  // if(!verified) {
+    //   return(<div>wooooong</div>)
+    // }
+    
   const handleSubmit = async (event) => {
     event.preventDefault()
+    
+    const verified = loginVerification(username, password)
 
-    await authenticate('http://localhost:9999/api/user/login', {
-      username,
-      password
-    }, (user) => {
-      context.logIn(user)
-      history.push('/workplace');
-    }, (e) => {
-      console.log('Log In Error', e)
-    })
-  }
+    if(!verified) {
+      setVerifiedUser(false)
+      console.log(verifiedUser);
+    } else {
+      setVerifiedUser(true)
+    }
 
-  // Finish verification
-  if(username === '' || password === '') {
-    setError(true)
+    try {
+      await authenticate('http://localhost:9999/api/user/login', 
+      {
+        username,
+        password
+      }, 
+      context, 
+      setError,
+      history)
+
+    } catch (e) {
+      console.error(e);
+    }
+    
   }
 
   return (
     <PageWrapper>
+      {error ? <div>woooong</div> : null}
+      { verifiedUser ? null : <div>Wrong</div>}
       <Form onSubmit={handleSubmit}> 
         <Title title="Log In" />
         <Input 
