@@ -59,7 +59,7 @@ const TextInput = styled.textarea`
   border: 1px solid black
 `
 
-const BoardCreation = (props) => {
+const TaskCreation = (props) => {
 
   const [taskName, setTaskName] = useState('')
   const [taskText, setTaskText] = useState('')
@@ -68,27 +68,32 @@ const BoardCreation = (props) => {
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
   const context = useContext(UserContext)
+  const [err, setErr] = useState(false)
 
-  const boardId = props.boardId
- 
+  const boardId = props.boardId.id
+  
   const handleTaskSubmit = async (event) => {
     event.preventDefault()
 
-    await createTask('http://localhost:9999/api/tasks/create-new', {
-      taskName, 
-      taskText,
-      taskStartDate,
-      taskDueDate,
-      taskAssignedTo,
-      user: context.user._id,
-      boardId
-    })
-
-    setTaskName('')
-    setTaskText('')
-    setTaskStartDate('')
-    setTaskDueDate('')
-    setTaskAssignedTo('')
+    if(!taskName || !taskText || !taskStartDate || !taskDueDate || !taskAssignedTo) {
+      setErr(true)
+    } else {
+      await createTask('http://localhost:9999/api/tasks/create-new', {
+        taskName, 
+        taskText,
+        taskStartDate,
+        taskDueDate,
+        taskAssignedTo,
+        user: context.user._id,
+        boardId,
+      })
+      
+      setTaskName('')
+      setTaskText('')
+      setTaskStartDate('')
+      setTaskDueDate('')
+      setTaskAssignedTo('')
+    }
   }
 
   const getAllUsers = async () => {
@@ -122,6 +127,11 @@ const BoardCreation = (props) => {
         <TitleContainer>
           <Title title="Project Tasks" />
         </TitleContainer>
+        {err ?  
+        <div>
+          <h2>You must use a valid input</h2>
+        </div> : null}
+       
         <Form onSubmit={handleTaskSubmit}>
           <InlineContainer>
             <Container>
@@ -135,7 +145,7 @@ const BoardCreation = (props) => {
           </InlineContainer>
           <TaskMessageContainer>
             <Container>
-            <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Task Message:</label>
+            <label style={{marginBottom: '8px', display: 'block'}} htmlFor={props.id}>Task Message:</label>
               <TextInput 
                 value={taskText}
                 onChange={(e) => setTaskText(e.target.value)}
@@ -146,21 +156,21 @@ const BoardCreation = (props) => {
           </TaskMessageContainer>
           <InlineContainer>
             <Container>
-              <Label htmlFor={boardId}>Start Date:</Label>
+              <Label htmlFor={props.id}>Start Date:</Label>
               <DatePicker minDate={moment().toDate()} selected={taskStartDate} onChange={(date) => setTaskStartDate(date)} placeholderText={taskStartDate}/>
             </Container>
           </InlineContainer>
 
           <InlineContainer>
             <Container>
-              <Label htmlFor={boardId}>Due Date:</Label>
+              <Label htmlFor={props.id}>Due Date:</Label>
               <DatePicker minDate={moment().toDate()} selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} />
             </Container>
           </InlineContainer>
           <TaskMessageContainer style={{width: '250px'}}>
             <Container>
             
-              <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Assigned To:</label>
+              <label style={{marginBottom: '8px', display: 'block'}} htmlFor={props.id}>Assigned To:</label>
               <Select style={{border: '1px solid black'}} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e.userId)} />
             </Container>
           </TaskMessageContainer>
@@ -173,4 +183,4 @@ const BoardCreation = (props) => {
   )
 }
 
-export default BoardCreation
+export default TaskCreation

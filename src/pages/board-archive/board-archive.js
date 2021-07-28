@@ -28,7 +28,7 @@ const BoardArchive = () => {
   const [taskList, setTaskList] = useState(false)
 
   useEffect(() => {
-    (async () => {
+    return (async () => {
       const board = await taskBoard(params)
 
       if(board[0].taskHistory.length > 0) {

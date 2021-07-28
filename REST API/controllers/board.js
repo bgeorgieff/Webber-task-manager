@@ -20,14 +20,15 @@ const getCurrentBoard = async (req, res, next) => {
   const { id } = req.body
 
   const currentBoard = await 
-  Board.find({_id: id})
-    .populate({path: 'tasks'})
-    .populate({path: 'tasks', populate: {path: 'assignedTo'}})
-    .populate({path: 'author'})
-    .populate({path: 'taskHistory'})
-    .populate({path: 'taskHistory', populate: {path: 'author'}})
-    .populate({path: 'taskHistory', populate: {path: 'assignedTo'}})
-                                  
+    Board.find({_id: id})
+      .populate({path: 'tasks'})
+      .populate({path: 'tasks', populate: {path: 'assignedTo'}})
+      .populate({path: 'author'})
+      .populate({path: 'taskHistory'})
+      .populate({path: 'taskHistory', populate: {path: 'author'}})
+      .populate({path: 'taskHistory', populate: {path: 'assignedTo'}
+    })
+           
   res.send(currentBoard)
 }
 

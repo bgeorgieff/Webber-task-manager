@@ -67,6 +67,7 @@ const TaskView = () => {
   const [dueDate, setDueDate] = useState('')
   const [comments, setComments] = useState()
   const [showModal, setShowModal] = useState(false)
+  const [err, setErr] = useState(false)
   const params = useParams()
 
   const currentTaskId = params
@@ -82,14 +83,28 @@ const TaskView = () => {
     (async () => {
       const info = await getCurrentTask('http://localhost:9999/api/tasks/get-task', currentTaskId)
     
+
+      if(!info[0]) {
+        setErr(true)
+      }
+
       setTaskName(info[0].name)
       setAssignedTo(info[0].assignedTo.username)
       setTaskText(info[0].text)
       setStartDate(info[0].startDate)
       setDueDate([info[0].endDate])
       setComments(info[0].comments)
+
     })()
-  }, [currentTaskId])
+
+  
+  }, [currentTaskId, comments])
+
+  if(err) {
+    return (
+      <div>Loading...</div>
+    )
+  }
 
   return (
     <PageWrapper>

@@ -11,12 +11,7 @@ const TitleWrapper = styled.div`
 
 const Workplaces = () => {
   const [workplaces, setWorkplaces] = useState([])
-
-  const allBoards = async () => {
-    const boards = await getAllBoards()
-    
-    setWorkplaces(boards)
-  }
+  const [err, setErr] = useState(false)
 
   const renderBoards = () => {
     return workplaces.map((e) => {
@@ -27,8 +22,23 @@ const Workplaces = () => {
   }
 
   useEffect(() => {
-    allBoards()
+    (async () => {
+      const boards = await getAllBoards()
+
+      if(boards) {
+        setWorkplaces(boards)
+      } else {
+        setErr(true)
+      }
+    })()
   }, [workplaces])
+
+
+  if(err) {
+    return(
+      <div>Loading...</div>
+    )
+  }
 
   return ( 
     <PageWrapper>

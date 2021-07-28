@@ -83,7 +83,7 @@ const MyTaskList = () => {
               return <TaskContainer 
                 key={e.name} 
                 title={e.name} 
-                author={e.author} 
+                author={e.author.username} 
                 startDate={e.startDate}
                 endDate={e.endDate}
                 assignedTo={e.assignedTo.username}
