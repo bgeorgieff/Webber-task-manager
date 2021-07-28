@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import PageWrapper from '../../components/page-wrapper'
 import getCurrentTask from '../../utils/getCurrentTask'
@@ -59,8 +59,7 @@ const ButtonContainer = styled.div`
   text-align: right;
 `
 
-const TaskView = (props) => {
-
+const TaskView = () => {
   const [taskName, setTaskName] = useState('')
   const [assignedTo, setAssignedTo] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -68,19 +67,9 @@ const TaskView = (props) => {
   const [dueDate, setDueDate] = useState('')
   const [comments, setComments] = useState()
   const [showModal, setShowModal] = useState(false)
+  const params = useParams()
 
-  const currentTaskId = props.match.params
-
-  const getTaskInfo = async () => {
-    const info = await getCurrentTask('http://localhost:9999/api/tasks/get-task', currentTaskId)
-    
-    setTaskName(info[0].name)
-    setAssignedTo(info[0].assignedTo.username)
-    setTaskText(info[0].text)
-    setStartDate(info[0].startDate)
-    setDueDate([info[0].endDate])
-    setComments(info[0].comments)
-  }
+  const currentTaskId = params
   
   const openModal = () => {
     setShowModal( prev => !prev)
@@ -89,18 +78,26 @@ const TaskView = (props) => {
   const dueDateFormat = moment(dueDate).format('LL')
   const startDateFormat = moment(startDate).format('LL')
 
-
   useEffect(() => {
-    getTaskInfo()
-  }, [])
-  
+    (async () => {
+      const info = await getCurrentTask('http://localhost:9999/api/tasks/get-task', currentTaskId)
+    
+      setTaskName(info[0].name)
+      setAssignedTo(info[0].assignedTo.username)
+      setTaskText(info[0].text)
+      setStartDate(info[0].startDate)
+      setDueDate([info[0].endDate])
+      setComments(info[0].comments)
+    })()
+  }, [currentTaskId])
+
   return (
     <PageWrapper>
       <TaskCard>
         <Container>
           <div>
             <h1>{taskName}</h1>
-            <Link style={{float: 'right'}} to={`/edit/task/${props.match.params.id}`}>Edit Task</Link>
+            <Link style={{float: 'right'}} to={`/edit/task/${params.id}`}>Edit Task</Link>
           </div>
           <TaskInfo>
             <div style={{margin: '20px', fontWeight: '700'}}>Start date: {startDateFormat}</div>

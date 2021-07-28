@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { MdBorderBottom } from 'react-icons/md'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import UserContext from '../../Contexts/Context'
@@ -81,10 +80,15 @@ const Boards = ({name, _id}) => {
               fontSize: '18px'}} to={`/my-tasks/${userContext.user._id}&boarId=${_id}`} >#MyTasks</Link><span>, </span>
           </Option>
           <Option>
-            <Link style={{
+            <button style={{
               color: 'inherit', 
               textAlign: 'inherit', 
-              fontSize: '18px'}} onClick={openModal} >#EditProjectName</Link><span>, </span>
+              fontSize: '18px',
+              textDecoration: 'underline',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer'
+              }} onClick={openModal} >#EditProjectName</button><span>, </span>
             <BoardNameModal boardId={_id} showModal={showModal} setShowModal={setShowModal} />
           </Option>
         </div>

@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import PageWrapper from '../../components/page-wrapper'
 import TaskCreation from '../../components/board-management'
 import TaskList from '../../components/task-list'
+import WorkplaceContext from '../../Contexts/Workplace'
 
-
-const TaskBoard = (props) => {
+const TaskBoard = () => {
+  const context = useContext(WorkplaceContext)
 
   return (
     <PageWrapper>
       <div>
-        <TaskCreation {...props} />
+        <TaskCreation boardId={context.id} />
       </div>
       <div>
-        <TaskList {...props} />
+        <TaskList boardId={context.id} />
       </div>
     </PageWrapper>
   )

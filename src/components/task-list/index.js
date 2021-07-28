@@ -15,21 +15,19 @@ const Table = styled.table`
   margin-right: auto;
 `
 
-const TaskList = (props) => {
+const TaskList = () => {
   const [data, setData] = useState()
   const params = useParams()
 
   const currentBoardId = params.id
   
-  const boardTasks = async () => {
-    const taskList = await getTaskBoard({id: currentBoardId})
-    
-    setData(taskList)
-  }
-  
   useEffect(() => {
-    boardTasks()
-  }, [])
+    (async () => {
+      const taskList = await getTaskBoard({id: currentBoardId})
+    
+      setData(taskList)
+    })()
+  }, [currentBoardId, params, data])
     
   return (
     <div>
@@ -81,7 +79,6 @@ const TaskList = (props) => {
                 assignedTo={e.assignedTo.username}
                 boardId={currentBoardId}
                 taskId={e._id}
-                author={data[0].author.username}
                 />}) : null}
         </tbody>
       </Table>

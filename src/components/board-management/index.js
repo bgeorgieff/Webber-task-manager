@@ -69,7 +69,7 @@ const BoardCreation = (props) => {
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
   const context = useContext(UserContext)
 
-  const boardId = props.match.params.id
+  const boardId = props.boardId
  
   const handleTaskSubmit = async (event) => {
     event.preventDefault()

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import PageWrapper from '../../components/page-wrapper'
 import Title from '../../components/title'
 import styled from 'styled-components'
@@ -22,24 +22,21 @@ const Para = styled.p`
   padding: 1vh 5vh 1vh 5vh;
 `
 
-const BoardArchive = (props) => {
-
+const BoardArchive = () => {
+  const params = useParams()
   const [archivedTasks, setArchivedTasks] = useState()
   const [taskList, setTaskList] = useState(false)
 
-  const getCurrentArchive = async () => {
-    const board = await taskBoard(props.match.params)
-
-    if(board[0].taskHistory.length > 0) {
-      setArchivedTasks(board[0].taskHistory)
-      setTaskList(true)
-    }
-  }
-
-
   useEffect(() => {
-    getCurrentArchive()
-  }, [taskList])
+    (async () => {
+      const board = await taskBoard(params)
+
+      if(board[0].taskHistory.length > 0) {
+        setArchivedTasks(board[0].taskHistory)
+        setTaskList(true)
+      }
+    })()
+  }, [taskList, archivedTasks, params])
 
   return (
     <PageWrapper>
@@ -89,7 +86,7 @@ const BoardArchive = (props) => {
             <TableData>
               <div>
                 <Para>
-                  <Link key={e.id} to={`/view/task/${e._id}`}>View</Link>
+                  <Link key={e._id} to={`/view/task/${e._id}`}>View</Link>
                 </Para>
               </div>
             </TableData>

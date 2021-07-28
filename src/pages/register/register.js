@@ -17,6 +17,7 @@ const Register = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [rePassword, setRepassword] = useState('')
+  const [error, setError] = useState()
   const history = useHistory()
 
   const context = useContext(UserContext)
@@ -29,16 +30,16 @@ const Register = () => {
       username,
       password,
       rePassword
-    }, (user) => {
-      context.logIn(user)
-      history.push('/workplace')
-    }, (e) => {
-      console.log('Register error', e);
-    })
+    },
+      context,
+      setError,
+      history
+    )
   }
 
   return (
     <PageWrapper>
+      {!error ? null : <div>Username or password are wrong</div>}
       <Form onSubmit={handleSubmit}> 
         <Title title="Register" />
         <Input 
