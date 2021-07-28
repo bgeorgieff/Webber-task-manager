@@ -1,19 +1,25 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PageWrapper from '../../components/page-wrapper'
 import TaskCreation from '../../components/board-management'
 import TaskList from '../../components/task-list'
-import WorkplaceContext from '../../Contexts/Workplace'
+import { useParams } from 'react-router-dom'
 
 const TaskBoard = () => {
-  const context = useContext(WorkplaceContext)
+  const params = useParams()
+
+  if(!params) {
+    return(
+      <div>Loading...</div>
+    )
+  }
 
   return (
     <PageWrapper>
       <div>
-        <TaskCreation boardId={context.id} />
+        <TaskCreation boardId={params} />
       </div>
       <div>
-        <TaskList boardId={context.id} />
+        <TaskList />
       </div>
     </PageWrapper>
   )

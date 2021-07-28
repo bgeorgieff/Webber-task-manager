@@ -116,13 +116,10 @@ const Modal = ({showModal, setShowModal, taskId}) => {
     setShowModal(prev => !prev)
   }
 
-  useEffect(
-    () => {
-      document.addEventListener('keydown', keyPress)
-      return () => document.removeEventListener('keydown', keyPress)
-    },
-    [keyPress]
-  );
+  useEffect(() => {
+    document.addEventListener('keydown', keyPress)
+    return () => document.removeEventListener('keydown', keyPress)
+  },[keyPress])
 
   return (
     <div>

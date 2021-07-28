@@ -17,6 +17,7 @@ const Table = styled.table`
 
 const TaskList = () => {
   const [data, setData] = useState()
+  const [err, setErr] = useState(false)
   const params = useParams()
 
   const currentBoardId = params.id
@@ -24,10 +25,20 @@ const TaskList = () => {
   useEffect(() => {
     (async () => {
       const taskList = await getTaskBoard({id: currentBoardId})
-    
-      setData(taskList)
+      
+      if(taskList) {
+        setData(taskList)
+      } else {
+        setErr(true)
+      }
     })()
   }, [currentBoardId, params, data])
+
+  if(err) {
+    return (
+      <div>Loading...</div>
+    )
+  }
     
   return (
     <div>
@@ -73,7 +84,7 @@ const TaskList = () => {
               .map((e) => { return <TaskContainer 
                 key={e.name} 
                 title={e.name} 
-                author={e.author} 
+                author={data[0].author.username} 
                 startDate={e.startDate}
                 endDate={e.endDate}
                 assignedTo={e.assignedTo.username}

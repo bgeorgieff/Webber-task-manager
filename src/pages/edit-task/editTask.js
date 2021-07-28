@@ -68,24 +68,30 @@ const EditTask = (props) => {
   const [taskDueDate, setTaskDueDate] = useState('')
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
+  const [err, setErr] = useState(false)
   const params = useParams()
   const history = useHistory()
 
+  
   const currentTaskId = params
 
   const handleEditSubmit = async (event) => {
     event.preventDefault()
 
-    await submitEdit('http://localhost:9999/api/tasks/edit-task', {
-      taskName,
-      taskText,
-      taskStartDate,
-      taskDueDate,
-      taskAssignedTo: taskAssignedTo.userId,
-      taskId: currentTaskId.id
-    })  
-
-    history.push(`/view/task/${currentTaskId.id}`)
+    if(!taskName || !taskText || !taskStartDate || !taskDueDate || !taskAssignedTo || !currentTaskId) {
+      setErr(true)
+    } else {
+      await submitEdit('http://localhost:9999/api/tasks/edit-task', {
+        taskName,
+        taskText,
+        taskStartDate,
+        taskDueDate,
+        taskAssignedTo: taskAssignedTo.userId,
+        taskId: currentTaskId.id
+      })  
+  
+      history.push(`/view/task/${currentTaskId.id}`)
+    }
   }
 
   useEffect(() => {
@@ -104,7 +110,7 @@ const EditTask = (props) => {
       setTaskAssignedTo(getTaskInfo[0].assignedTo)
     })()
     
-  }, [taskName, taskText, taskStartDate, taskDueDate, taskAssignedTo, currentTaskId])
+  }, [currentTaskId])
 
 
   useEffect(() => {
@@ -135,6 +141,11 @@ const EditTask = (props) => {
         <TitleContainer>
           <Title title="Edit Task" />
         </TitleContainer>
+        { err ? 
+          <div>
+            <h2>Your input is wrong</h2>
+          </div>
+        : null }
         <Form onSubmit={handleEditSubmit}>
           <InlineContainer>
             <Container>

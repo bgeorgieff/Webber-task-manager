@@ -21,10 +21,9 @@ const TaskContainer = (props) => {
   const boardId = params.id.split('&boarId=')[1] || params.id
   const formattedStartDate = moment(props.startDate).format('LL')
   const formattedEndDate = moment(props.endDate).format('LL')
+  const diff = moment(props.startDate).diff(props.endDate, 'days')
 
   useEffect(() => {
-    const diff = moment(props.startDate).diff(props.endDate, 'days')
-
     (() => {
       if(diff >= 0) {
         setOverdue(true)
@@ -41,7 +40,9 @@ const TaskContainer = (props) => {
         return
       }
     })()
-  }, [overdue, lessThanThreeDays, moreThanAWeek, props])
+
+  }, [overdue, lessThanThreeDays, moreThanAWeek, props, diff])
+
 
   return (
     <tr>
