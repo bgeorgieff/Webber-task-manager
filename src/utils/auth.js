@@ -14,7 +14,7 @@ const authenticate = async (url, body, context, setError, history) => {
 
       if(typeof response === 'object') {
         context.logIn(response)
-        history.push('/')
+        history.push('/workplace')
         setError(false)
       } else {
         setError(true)

@@ -10,7 +10,7 @@ const TableData = styled.td`
 const Para = styled.p`
   text-align: center;
   padding: 1vh 5vh 1vh 5vh;
-`
+` 
 
 const TaskContainer = (props) => {
   const [lessThanThreeDays, setLessThanThreeDays] = useState(false)
@@ -19,31 +19,29 @@ const TaskContainer = (props) => {
   const params = useParams()
 
   const boardId = params.id.split('&boarId=')[1] || params.id
-
   const formattedStartDate = moment(props.startDate).format('LL')
   const formattedEndDate = moment(props.endDate).format('LL')
-  const diff = moment(props.startDate).diff(props.endDate, 'days')
-
-  const getDiff = () => {
-    if(diff >= 0) {
-      setOverdue(true)
-      return
-    }
-
-    if(diff >= -3) {
-      setLessThanThreeDays(true)
-      return
-    }
-
-    if(diff <= -4) {
-      setMoreThenAWeek(true)
-      return
-    }
-  }
 
   useEffect(() => {
-    getDiff()
-  }, [])
+    const diff = moment(props.startDate).diff(props.endDate, 'days')
+
+    (() => {
+      if(diff >= 0) {
+        setOverdue(true)
+        return
+      }
+  
+      if(diff >= -3) {
+        setLessThanThreeDays(true)
+        return
+      }
+  
+      if(diff <= -4) {
+        setMoreThenAWeek(true)
+        return
+      }
+    })()
+  }, [overdue, lessThanThreeDays, moreThanAWeek, props])
 
   return (
     <tr>
@@ -86,7 +84,7 @@ const TaskContainer = (props) => {
       }>
         <div>
           <Para>
-            <Link to={`/view/task/${props.taskId}`}>View</Link>
+            <Link to={{pathname: `/view/task/${props.taskId}`, props: `${boardId}`}}>View</Link>
           </Para>
         </div>
       </TableData>

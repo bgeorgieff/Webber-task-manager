@@ -106,7 +106,7 @@ const Modal = ({showModal, setShowModal, taskId}) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    const submit = await submitComment('http://localhost:9999/api/comments/submit', {
+    await submitComment('http://localhost:9999/api/comments/submit', {
       comment: comment,
       author: context.user,
       taskId: taskId

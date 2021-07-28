@@ -21,24 +21,22 @@ const MyTaskList = () => {
   const params = useParams()
   const [data, setData] = useState()
   const [tasks, setTasks] = useState(false)
-
-
+  
   const userId = params.id.split('&boarId=')
 
-  const myTasks = async () => {
-    const tasks = await getMyTasks('http://localhost:9999/api/tasks/my-tasks', {
-      user: userId[0]
-    })
-
-    if(tasks[0].openedTasks.length > 0) {
-      setData(tasks[0].openedTasks)
-      setTasks(true)
-    }
-  }
-
   useEffect(() => {
-    myTasks()
-  },  [data, tasks])
+    (async () => {
+   
+      const tasks = await getMyTasks('http://localhost:9999/api/tasks/my-tasks', {
+        user: userId[0]
+      })
+  
+      if(tasks[0].openedTasks.length > 0) {
+        setData(tasks[0].openedTasks)
+        setTasks(true)
+      }
+    })()
+  },  [data, tasks, userId])
 
   return (
     <PageWrapper>
@@ -91,7 +89,6 @@ const MyTaskList = () => {
                 assignedTo={e.assignedTo.username}
                 boardId={userId[1]}
                 taskId={e._id}
-                author={data[0].author.username}
               />}) : null}
         </tbody>
       </Table> : <p>You currently don't have any tasks</p>}

@@ -10,6 +10,7 @@ import getCurrentTask from '../../utils/getCurrentTask'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { useHistory } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 const Container = styled.div`
   padding: 20px 20px 0px 20px;
@@ -61,53 +62,16 @@ const TextInput = styled.textarea`
 `
 
 const EditTask = (props) => {
-
   const [taskName, setTaskName] = useState('')
   const [taskText, setTaskText] = useState('')
   const [taskStartDate, setTaskStartDate] = useState('')
   const [taskDueDate, setTaskDueDate] = useState('')
   const [users, setUsers] = useState([])
   const [taskAssignedTo, setTaskAssignedTo] = useState('')
+  const params = useParams()
   const history = useHistory()
 
-  const currentTaskId = props.match.params
-
-  const getCurrentTaskInfo = async () => {
-    const getTaskInfo = await getCurrentTask('http://localhost:9999/api/tasks/get-task', currentTaskId)
-    
-    setTaskName(getTaskInfo[0].name)
-    setTaskText(getTaskInfo[0].text)
-
-    const formattedStartDate = moment(getTaskInfo[0].startDate).toDate()
-    const formattedEndDate = moment(getTaskInfo[0].endDate).toDate()
-
-    setTaskStartDate(formattedStartDate)
-    setTaskDueDate(formattedEndDate)
-
-    setTaskAssignedTo(getTaskInfo[0].assignedTo)
-  }
-
-  const boardId = props.match.params.id
-
-  const getAllUsers = async () => {
-    const response = await fetch('http://localhost:9999/api/user/all', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    })
-
-    const users = await response.json()
-    
-    const options = users.map((e) => ({
-      "userId": e._id,
-      "label": e.username
-    }))
-
-    setUsers({
-      options
-    })
-  }
+  const currentTaskId = params
 
   const handleEditSubmit = async (event) => {
     event.preventDefault()
@@ -118,16 +82,52 @@ const EditTask = (props) => {
       taskStartDate,
       taskDueDate,
       taskAssignedTo: taskAssignedTo.userId,
-      taskId: props.match.params.id
+      taskId: currentTaskId.id
     })  
 
     history.push(`/view/task/${currentTaskId.id}`)
   }
 
   useEffect(() => {
-    getCurrentTaskInfo()
-    getAllUsers()
-  }, [])
+    (async () => {
+      const getTaskInfo = await getCurrentTask('http://localhost:9999/api/tasks/get-task', currentTaskId)
+    
+      setTaskName(getTaskInfo[0].name)
+      setTaskText(getTaskInfo[0].text)
+  
+      const formattedStartDate = moment(getTaskInfo[0].startDate).toDate()
+      const formattedEndDate = moment(getTaskInfo[0].endDate).toDate()
+  
+      setTaskStartDate(formattedStartDate)
+      setTaskDueDate(formattedEndDate)
+  
+      setTaskAssignedTo(getTaskInfo[0].assignedTo)
+    })()
+    
+  }, [taskName, taskText, taskStartDate, taskDueDate, taskAssignedTo, currentTaskId])
+
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch('http://localhost:9999/api/user/all', {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+  
+      const users = await response.json()
+      
+      const options = users.map((e) => ({
+        "userId": e._id,
+        "label": e.username
+      }))
+  
+      setUsers({
+        options
+      })
+    })()
+  }, [users])
 
   return (
     <PageWrapper>
@@ -148,7 +148,7 @@ const EditTask = (props) => {
           </InlineContainer>
           <TaskMessageContainer>
             <Container>
-            <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Task Message:</label>
+            <label style={{marginBottom: '8px', display: 'block'}} htmlFor={currentTaskId.id}>Task Message:</label>
               <TextInput 
                 value={taskText}
                 onChange={(e) => setTaskText(e.target.value)}
@@ -157,21 +157,20 @@ const EditTask = (props) => {
           </TaskMessageContainer>
           <InlineContainer>
             <Container>
-              <Label htmlFor={boardId}>Start Date:</Label>
+              <Label htmlFor={currentTaskId.id}>Start Date:</Label>
               <DatePicker selected={taskStartDate} onChange={(date) => setTaskStartDate(date)} placeholderText={taskStartDate}/>
             </Container>
           </InlineContainer>
-
           <InlineContainer>
             <Container>
-              <Label htmlFor={boardId}>Due Date:</Label>
+              <Label htmlFor={currentTaskId.id}>Due Date:</Label>
               <DatePicker minDate={moment().toDate()} selected={taskDueDate} onChange={(date) => setTaskDueDate(date)} placeholderText={taskDueDate} />
             </Container>
           </InlineContainer>
           <TaskMessageContainer style={{width: '250px'}}>
             <Container>
             {/* need default selected user */}
-              <label style={{marginBottom: '8px', display: 'block'}} htmlFor={boardId}>Assigned To:</label>
+              <label style={{marginBottom: '8px', display: 'block'}} htmlFor={currentTaskId.id}>Assigned To:</label>
               <Select minDate={moment().toDate()} style={{border: '1px solid black'}} getOptionValue={option => option.label} options={users.options} onChange={(e) => setTaskAssignedTo(e)} />
             </Container>
           </TaskMessageContainer>
